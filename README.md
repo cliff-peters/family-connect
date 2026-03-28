@@ -39,10 +39,6 @@ Family Connect generates ready-to-send emails for the most common family communi
 4. Fill in the fields and generate your email
 5. Click "Copy Full Email" and paste into your email client
 
-## Deployment
-
-Host on GitHub Pages, save to Google Drive, or open the HTML file directly from your computer. No server required.
-
 ## Part of The DOR Suite
 
 Family Connect is one tool in The DOR Suite, a collection of workflow tools designed for Directors of Rehabilitation in assisted living.
@@ -50,6 +46,4 @@ Family Connect is one tool in The DOR Suite, a collection of workflow tools desi
 - **Family Connect** - Family communication emails
 - **Unit Calc** - 8-minute rule unit calculator
 
----
 
-Designed by Cliff Peters
