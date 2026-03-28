@@ -11,23 +11,23 @@ Family Connect generates ready-to-send emails for the most common family communi
 
 ## Tabs
 
-**Therapy Start** — New referral emails for existing residents, new move-ins, and consent form follow-ups. Supports PT, OT, and ST with discipline-specific explanations. Includes gentle and firmer consent nudge options.
+**Therapy Start** - New referral emails for existing residents, new move-ins, and consent form follow-ups. Supports PT, OT, and ST with discipline-specific explanations. Includes gentle and firmer consent nudge options.
 
-**Post-Eval** — Post-evaluation update emails with per-discipline goal selection, ST swallow/cognition focus, and per-discipline visit frequency. Adapts formatting for single vs. multi-discipline plans.
+**Post-Eval** - Post-evaluation update emails with per-discipline goal selection, ST swallow/cognition focus, and per-discipline visit frequency. Adapts formatting for single vs. multi-discipline plans.
 
-**Therapy Update** — Progress update emails with status indicators, custom comments, and frequency change options (increasing, decreasing, or no change) per discipline.
+**Therapy Update** - Progress update emails with status indicators, custom comments, and frequency change options (increasing, decreasing, or no change) per discipline.
 
-**Therapy Transition** — Transition emails for goals met, preserving remaining visits, plateau, and home health. Includes insurance visit preservation language and Health & Wellness offer. Home health email explains the Part A/Part B billing shift.
+**Therapy Transition** - Transition emails for goals met, preserving remaining visits, plateau, and home health. Includes insurance visit preservation language and Health & Wellness offer. Home health email explains the Part A/Part B billing shift.
 
-**Fall Follow-Up** — Post-fall emails with intervention details, equipment links, and purchasing options.
+**Fall Follow-Up** - Post-fall emails with intervention details, equipment links, and purchasing options.
 
-**Quick Reference** — Talking points and language your team can pull from during family calls and conversations. Includes Health & Wellness talking points, insurance visit preservation language, and common family FAQs.
+**Quick Reference** - Talking points and language your team can pull from during family calls and conversations. Includes Health & Wellness talking points, insurance visit preservation language, and common family FAQs.
 
 ## Features
 
 - Facility name field at the top populates every email automatically
-- No patient data is stored or transmitted — everything runs locally in the browser
-- Single HTML file with no dependencies — works on any device
+- No patient data is stored or transmitted - everything runs locally in the browser
+- Single HTML file with no dependencies - works on any device
 - Dark theme with high contrast optimized for Chromebook readability
 - Copy button on every generated email
 
@@ -47,8 +47,8 @@ Host on GitHub Pages, save to Google Drive, or open the HTML file directly from 
 
 Family Connect is one tool in The DOR Suite, a collection of workflow tools designed for Directors of Rehabilitation in assisted living.
 
-- **Family Connect** — Family communication emails
-- **Unit Calc** — 8-minute rule unit calculator
+- **Family Connect** - Family communication emails
+- **Unit Calc** - 8-minute rule unit calculator
 
 ---
 
