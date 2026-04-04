@@ -1,7 +1,4 @@
-[README.md](https://github.com/user-attachments/files/26318189/README.md)
 # Family Connect
-
-**Part of The DOR Suite**
 
 A family communication tool for Directors of Rehabilitation in assisted living. Generate professional, consistent emails across every stage of the therapy lifecycle without starting from scratch.
 
