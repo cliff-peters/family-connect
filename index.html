@@ -22,7 +22,8 @@
 }
 body{font-family:"Mulish",sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;padding:40px 16px 80px;}
 .wrap{max-width:720px;margin:0 auto;}
-h1{font-size:1.9rem;font-weight:800;line-height:1.2;margin-bottom:28px;color:var(--txt);}
+h1{font-size:1.9rem;font-weight:800;line-height:1.2;margin-bottom:28px;}
+h1 span{color:var(--blue);}
 
 /* TABS */
 .tab-row{display:flex;gap:0;margin-bottom:24px;border:1.5px solid var(--bdr);border-radius:8px;overflow:hidden;}
@@ -73,6 +74,12 @@ textarea{resize:vertical;min-height:70px;}
 .disc-check{display:flex;align-items:center;gap:6px;cursor:pointer;}
 .disc-check input{accent-color:var(--blue);width:18px;height:18px;cursor:pointer;}
 .disc-check span{font-size:.92rem;font-weight:600;}
+.disc-chip-group{display:flex;gap:8px;flex-wrap:wrap;}
+.disc-chip{padding:7px 18px;border-radius:20px;border:1px solid var(--bdr);background:var(--surf2);font-family:"Mulish",sans-serif;font-size:.88rem;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s;user-select:none;}
+.disc-chip:hover{border-color:var(--blue);color:var(--blue);}
+.disc-chip.pt-on{background:rgba(90,157,230,0.12);border-color:var(--blue);color:var(--blue);}
+.disc-chip.ot-on{background:rgba(240,168,48,0.12);border-color:var(--amber);color:var(--amber);}
+.disc-chip.st-on{background:rgba(62,207,122,0.12);border-color:var(--green);color:var(--green);}
 
 /* REASON SELECT */
 .reason-group{display:flex;flex-direction:column;gap:10px;}
@@ -172,10 +179,10 @@ textarea{resize:vertical;min-height:70px;}
 
   <div class="card">
     <div class="card-title">Disciplines Ordered</div>
-    <div class="disc-row">
-      <label class="disc-check"><input type="checkbox" id="s-pt" value="PT"><span>PT</span></label>
-      <label class="disc-check"><input type="checkbox" id="s-ot" value="OT"><span>OT</span></label>
-      <label class="disc-check"><input type="checkbox" id="s-st" value="ST" onchange="toggleStFocus()"><span>ST</span></label>
+    <div class="disc-chip-group" id="s-disc-chips">
+      <button class="disc-chip" id="s-pt-chip" onclick="toggleSDisc('pt')">PT</button>
+      <button class="disc-chip" id="s-ot-chip" onclick="toggleSDisc('ot')">OT</button>
+      <button class="disc-chip" id="s-st-chip" onclick="toggleSDisc('st')">ST</button>
     </div>
     <div id="stFocusField" style="display:none;margin-top:14px;">
       <label style="margin-bottom:6px;display:block;">Speech Therapy Focus</label>
@@ -243,10 +250,10 @@ textarea{resize:vertical;min-height:70px;}
 
   <div class="card">
     <div class="card-title">Disciplines Evaluated</div>
-    <div class="disc-row">
-      <label class="disc-check"><input type="checkbox" id="e-pt" onchange="toggleEvalSection('pt')"><span>PT</span></label>
-      <label class="disc-check"><input type="checkbox" id="e-ot" onchange="toggleEvalSection('ot')"><span>OT</span></label>
-      <label class="disc-check"><input type="checkbox" id="e-st" onchange="toggleEvalSection('st')"><span>ST</span></label>
+    <div class="disc-chip-group" id="e-disc-chips">
+      <button class="disc-chip" id="e-pt-chip" onclick="toggleEDisc('pt')">PT</button>
+      <button class="disc-chip" id="e-ot-chip" onclick="toggleEDisc('ot')">OT</button>
+      <button class="disc-chip" id="e-st-chip" onclick="toggleEDisc('st')">ST</button>
     </div>
   </div>
 
@@ -373,9 +380,11 @@ textarea{resize:vertical;min-height:70px;}
   <div class="card">
     <div class="card-title">Disciplines</div>
     <div class="disc-row">
-      <label class="disc-check"><input type="checkbox" id="u-pt" onchange="toggleUpdateDisc('pt')"><span>PT</span></label>
-      <label class="disc-check"><input type="checkbox" id="u-ot" onchange="toggleUpdateDisc('ot')"><span>OT</span></label>
-      <label class="disc-check"><input type="checkbox" id="u-st" onchange="toggleUpdateDisc('st')"><span>ST</span></label>
+      <div class="disc-chip-group" id="u-disc-chips">
+        <button class="disc-chip" id="u-pt-chip" onclick="toggleUDisc('pt')">PT</button>
+        <button class="disc-chip" id="u-ot-chip" onclick="toggleUDisc('ot')">OT</button>
+        <button class="disc-chip" id="u-st-chip" onclick="toggleUDisc('st')">ST</button>
+      </div>
     </div>
   </div>
 
@@ -686,12 +695,56 @@ textarea{resize:vertical;min-height:70px;}
 
 <div style="text-align:center;padding:40px 0 0;margin-top:40px;border-top:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;gap:10px;">
   <span style="width:28px;height:28px;background:linear-gradient(135deg,#4a90d9,#3ecf7a);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900;color:#0c0f14;letter-spacing:.02em;">CP</span>
-  <span style="font-size:.7rem;font-weight:600;letter-spacing:.08em;color:var(--muted);">Built by Cliff Peters</span>
+  <span style="font-size:.7rem;font-weight:600;letter-spacing:.08em;color:var(--muted);">Designed by Cliff Peters</span>
 </div>
 
 </div><!-- /wrap -->
 
 <script>
+// ── DISC CHIPS ──
+var sDiscs = {pt:false, ot:false, st:false};
+function toggleSDisc(d) {
+  sDiscs[d] = !sDiscs[d];
+  var chip = document.getElementById('s-'+d+'-chip');
+  chip.classList.toggle(d+'-on', sDiscs[d]);
+  // wire ST focus
+  if (d === 'st') {
+    document.getElementById('stFocusField').style.display = sDiscs.st ? 'block' : 'none';
+    if (!sDiscs.st) document.querySelectorAll('input[name="stFocus"]').forEach(function(r){r.checked=false;});
+  }
+}
+
+var eDiscs = {pt:false, ot:false, st:false};
+function toggleEDisc(d) {
+  eDiscs[d] = !eDiscs[d];
+  var chip = document.getElementById('e-'+d+'-chip');
+  chip.classList.toggle(d+'-on', eDiscs[d]);
+  toggleEvalSection(d);
+  if (!eDiscs[d]) {
+    document.querySelectorAll('.e-'+d+'-goal').forEach(function(cb){cb.checked=false;});
+    var custom = document.getElementById('e-'+d+'-custom');
+    if (custom) custom.value = '';
+    if (d === 'st') {
+      document.querySelectorAll('input[name="e-st-focus"]').forEach(function(r){r.checked=false;});
+      document.getElementById('eval-st-swallow').style.display='none';
+      document.getElementById('eval-st-cognition').style.display='none';
+    }
+  }
+}
+
+var uDiscs = {pt:false, ot:false, st:false};
+function toggleUDisc(d) {
+  uDiscs[d] = !uDiscs[d];
+  var chip = document.getElementById('u-'+d+'-chip');
+  chip.classList.toggle(d+'-on', uDiscs[d]);
+  toggleUpdateDisc(d);
+}
+
+// ── SHIM: redirect old checkbox checks to chip state ──
+function getSDiscChecked(d) { return sDiscs[d]; }
+function getEDiscChecked(d) { return eDiscs[d]; }
+function getUDiscChecked(d) { return uDiscs[d]; }
+
 // ── FACILITY NAME ──
 function getFacility() {
   return document.getElementById('facilityName').value.trim() || 'your facility';
@@ -716,7 +769,7 @@ function selectReason(el, val) {
 
 // ── ST FOCUS TOGGLE ──
 function toggleStFocus() {
-  var stChecked = document.getElementById('s-st').checked;
+  var stChecked = sDiscs.st;
   document.getElementById('stFocusField').style.display = stChecked ? 'block' : 'none';
   if (!stChecked) {
     document.querySelectorAll('input[name="stFocus"]').forEach(function(r) { r.checked = false; });
@@ -731,9 +784,9 @@ function getStFocus() {
 // ── DISCIPLINE FORMATTER ──
 function getDiscs() {
   var checked = [];
-  if (document.getElementById('s-pt').checked) checked.push('Physical Therapy');
-  if (document.getElementById('s-ot').checked) checked.push('Occupational Therapy');
-  if (document.getElementById('s-st').checked) checked.push('Speech Therapy');
+  if (sDiscs.pt) checked.push('Physical Therapy');
+  if (sDiscs.ot) checked.push('Occupational Therapy');
+  if (sDiscs.st) checked.push('Speech Therapy');
   if (checked.length === 0) return '';
   if (checked.length === 1) return checked[0];
   if (checked.length === 2) return checked[0] + ' and ' + checked[1];
@@ -743,16 +796,16 @@ function getDiscs() {
 // ── DISCIPLINE BLURBS ──
 function getDiscCount() {
   var count = 0;
-  if (document.getElementById('s-pt').checked) count++;
-  if (document.getElementById('s-ot').checked) count++;
-  if (document.getElementById('s-st').checked) count++;
+  if (sDiscs.pt) count++;
+  if (sDiscs.ot) count++;
+  if (sDiscs.st) count++;
   return count;
 }
 
 function getInlineFocus(resident) {
-  if (document.getElementById('s-pt').checked) return ', targeting functional mobility and safety';
-  if (document.getElementById('s-ot').checked) return ', targeting independence with daily activities and self care';
-  if (document.getElementById('s-st').checked) {
+  if (sDiscs.pt) return ', targeting functional mobility and safety';
+  if (sDiscs.ot) return ', targeting independence with daily activities and self care';
+  if (sDiscs.st) {
     var focus = getStFocus();
     if (focus === 'swallow') return ', targeting swallowing safety';
     if (focus === 'cognition') return ', targeting memory and cognitive function';
@@ -762,9 +815,9 @@ function getInlineFocus(resident) {
 
 function getDiscBlurbs(resident) {
   var lines = [];
-  if (document.getElementById('s-pt').checked) lines.push('Our Physical Therapy team will work with ' + resident + ' on functional mobility and safety.');
-  if (document.getElementById('s-ot').checked) lines.push('Occupational Therapy will support independence with daily activities and self care.');
-  if (document.getElementById('s-st').checked) {
+  if (sDiscs.pt) lines.push('Our Physical Therapy team will work with ' + resident + ' on functional mobility and safety.');
+  if (sDiscs.ot) lines.push('Occupational Therapy will support independence with daily activities and self care.');
+  if (sDiscs.st) {
     var focus = getStFocus();
     if (focus === 'swallow') lines.push('Speech Therapy will address swallowing safety.');
     if (focus === 'cognition') lines.push('Speech Therapy will address memory and cognitive function.');
@@ -851,7 +904,7 @@ function generateStart() {
 
   var discs = getDiscs();
   if (!discs) { alert('Please select at least one discipline.'); return; }
-  if (document.getElementById('s-st').checked && !getStFocus()) { alert('Please select a Speech Therapy focus (Swallow or Cognition).'); return; }
+  if (sDiscs.st && !getStFocus()) { alert('Please select a Speech Therapy focus (Swallow or Cognition).'); return; }
 
   if (referralType === 'movein') {
     subject = resident + ' \u2013 Starting Therapy at ' + getFacility();
@@ -965,9 +1018,9 @@ function generateEval() {
   var poa = document.getElementById('e-poa').value.trim();
   if (!resident || !poa) { alert('Please enter the resident name and family contact name.'); return; }
 
-  var hasPT = document.getElementById('e-pt').checked;
-  var hasOT = document.getElementById('e-ot').checked;
-  var hasST = document.getElementById('e-st').checked;
+  var hasPT = eDiscs.pt;
+  var hasOT = eDiscs.ot;
+  var hasST = eDiscs.st;
   if (!hasPT && !hasOT && !hasST) { alert('Please select at least one discipline.'); return; }
 
   if (hasST) {
@@ -1120,9 +1173,9 @@ function generateUpdate() {
   var poa = document.getElementById('u-poa').value.trim();
   if (!resident || !poa) { alert('Please enter the resident name and family contact name.'); return; }
 
-  var hasPT = document.getElementById('u-pt').checked;
-  var hasOT = document.getElementById('u-ot').checked;
-  var hasST = document.getElementById('u-st').checked;
+  var hasPT = uDiscs.pt;
+  var hasOT = uDiscs.ot;
+  var hasST = uDiscs.st;
   if (!hasPT && !hasOT && !hasST) { alert('Please select at least one discipline.'); return; }
   if (!selectedStatus) { alert('Please select how the resident is doing.'); return; }
   if (!selectedFreqChange) { alert('Please select a frequency change option.'); return; }
