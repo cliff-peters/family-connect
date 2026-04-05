@@ -1365,26 +1365,49 @@ function showOutput(prefix) {
   setTimeout(function() { card.scrollIntoView({behavior:'smooth', block:'start'}); }, 50);
 }
 
+function fallbackCopy(text, cb) {
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.cssText = 'position:fixed;opacity:0;';
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  try { document.execCommand('copy'); cb(); } catch (e) {}
+  document.body.removeChild(ta);
+}
+
 function copyEmail(prefix) {
   var subject = document.getElementById(prefix + '-subject').textContent;
   var body = document.getElementById(prefix + '-body').textContent;
   var full = 'Subject: ' + subject + '\n\n' + body;
-  navigator.clipboard.writeText(full).then(function() {
-    var btn = document.getElementById(prefix + '-copy');
+  var btn = document.getElementById(prefix + '-copy');
+  var orig = btn.textContent;
+  var done = function() {
     btn.textContent = '\u2713 Copied';
     btn.classList.add('copied');
-    setTimeout(function() { btn.textContent = 'Copy Full Email'; btn.classList.remove('copied'); }, 2200);
-  });
+    setTimeout(function() { btn.textContent = orig; btn.classList.remove('copied'); }, 2200);
+  };
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(full).then(done).catch(function() { fallbackCopy(full, done); });
+  } else {
+    fallbackCopy(full, done);
+  }
 }
 
 function copyRef(id, btn) {
   var el = document.getElementById(id);
   var text = el.innerText;
-  navigator.clipboard.writeText(text).then(function() {
+  var orig = btn.textContent;
+  var done = function() {
     btn.textContent = 'Copied';
     btn.classList.add('copied');
-    setTimeout(function() { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2200);
-  });
+    setTimeout(function() { btn.textContent = orig; btn.classList.remove('copied'); }, 2200);
+  };
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(done).catch(function() { fallbackCopy(text, done); });
+  } else {
+    fallbackCopy(text, done);
+  }
 }
 
 function addLink() {
