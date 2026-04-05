@@ -27,10 +27,11 @@ h1 span span{color:var(--blue);}
 
 /* PANELS */
 .panel{display:none;}
-.panel.active{display:block;}
+.panel.active{display:block;animation:fadeUp .2s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
 
 /* CARDS */
-.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:22px;margin-bottom:16px;}
+.card{background:var(--surface);border:1px solid var(--border);border-top:3px solid #5a9de6;border-radius:10px;padding:22px;margin-bottom:16px;}
 .card-title{font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:16px;}
 .fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 .field{display:flex;flex-direction:column;gap:5px;}
@@ -95,7 +96,7 @@ textarea{resize:vertical;min-height:70px;}
 
 /* OUTPUT */
 .output-card{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:24px;display:none;}
-.output-card.visible{display:block;}
+.output-card.visible{display:block;border-left:3px solid #5a9de6;border-color:rgba(90,157,230,0.3);box-shadow:0 4px 24px rgba(90,157,230,0.07);}
 .output-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
 .output-title{font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);}
 .tag{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);background:rgba(62,207,122,.1);padding:4px 10px;border-radius:4px;}
@@ -125,9 +126,9 @@ textarea{resize:vertical;min-height:70px;}
 </style>
 </head>
 <body>
+<div style="position:fixed;top:0;left:0;right:0;height:3px;background:#5a9de6;z-index:9999;"></div>
 <div class="wrap">
 
-<div style="font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:10px;">The DOR Suite</div>
 <h1 style="display:flex;align-items:center;gap:14px;">
   <span style="width:44px;height:44px;background:var(--logo-gradient);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:900;color:var(--logo-text);letter-spacing:.02em;flex-shrink:0;">CP</span>
   <span>Family <span style="color:var(--blue);">Connect</span></span>
