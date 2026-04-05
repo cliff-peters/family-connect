@@ -141,12 +141,12 @@ textarea{resize:vertical;min-height:70px;}
 </div>
 
 <div class="tab-row">
-  <button class="tab-btn active" id="tab-start" onclick="switchTab('start')">Therapy Start</button>
-  <button class="tab-btn" id="tab-eval" onclick="switchTab('eval')">Post-Eval</button>
-  <button class="tab-btn" id="tab-update" onclick="switchTab('update')">Therapy Update</button>
-  <button class="tab-btn" id="tab-transition" onclick="switchTab('transition')">Therapy Transition</button>
-  <button class="tab-btn" id="tab-fall" onclick="switchTab('fall')">Fall Follow-Up</button>
-  <button class="tab-btn" id="tab-ref" onclick="switchTab('ref')">Quick Reference</button>
+  <button type="button" class="tab-btn active" id="tab-start" onclick="switchTab('start')" aria-label="Email: therapy start">Therapy Start</button>
+  <button type="button" class="tab-btn" id="tab-eval" onclick="switchTab('eval')" aria-label="Email: post-eval">Post-Eval</button>
+  <button type="button" class="tab-btn" id="tab-update" onclick="switchTab('update')" aria-label="Email: therapy update">Therapy Update</button>
+  <button type="button" class="tab-btn" id="tab-transition" onclick="switchTab('transition')" aria-label="Email: therapy transition">Therapy Transition</button>
+  <button type="button" class="tab-btn" id="tab-fall" onclick="switchTab('fall')" aria-label="Email: fall follow-up">Fall Follow-Up</button>
+  <button type="button" class="tab-btn" id="tab-ref" onclick="switchTab('ref')" aria-label="Quick reference">Quick Reference</button>
 </div>
 
 <!-- ========== THERAPY START PANEL ========== -->
@@ -154,9 +154,9 @@ textarea{resize:vertical;min-height:70px;}
   <div class="card">
     <div class="card-title">Email Type</div>
     <div class="toggle-row">
-      <button class="toggle-btn active" id="tog-existing" onclick="setReferralType('existing')">Existing Resident</button>
-      <button class="toggle-btn" id="tog-movein" onclick="setReferralType('movein')">New Move-In</button>
-      <button class="toggle-btn" id="tog-consent" onclick="setReferralType('consent')">Consent Follow-Up</button>
+      <button type="button" class="toggle-btn active" id="tog-existing" onclick="setReferralType('existing')" aria-label="Referral type: existing resident">Existing Resident</button>
+      <button type="button" class="toggle-btn" id="tog-movein" onclick="setReferralType('movein')" aria-label="Referral type: new move-in">New Move-In</button>
+      <button type="button" class="toggle-btn" id="tog-consent" onclick="setReferralType('consent')" aria-label="Referral type: consent follow-up">Consent Follow-Up</button>
     </div>
   </div>
 
@@ -177,9 +177,9 @@ textarea{resize:vertical;min-height:70px;}
   <div class="card">
     <div class="card-title">Disciplines Ordered</div>
     <div class="disc-chip-group" id="s-disc-chips">
-      <button class="disc-chip" id="s-pt-chip" onclick="toggleSDisc('pt')">PT</button>
-      <button class="disc-chip" id="s-ot-chip" onclick="toggleSDisc('ot')">OT</button>
-      <button class="disc-chip" id="s-st-chip" onclick="toggleSDisc('st')">ST</button>
+      <button type="button" class="disc-chip" id="s-pt-chip" onclick="toggleSDisc('pt')" aria-label="Toggle physical therapy for this email">PT</button>
+      <button type="button" class="disc-chip" id="s-ot-chip" onclick="toggleSDisc('ot')" aria-label="Toggle occupational therapy for this email">OT</button>
+      <button type="button" class="disc-chip" id="s-st-chip" onclick="toggleSDisc('st')" aria-label="Toggle speech therapy for this email">ST</button>
     </div>
     <div id="stFocusField" style="display:none;margin-top:14px;">
       <label style="margin-bottom:6px;display:block;">Speech Therapy Focus</label>
@@ -210,12 +210,12 @@ textarea{resize:vertical;min-height:70px;}
   <div class="card" id="consentCard" style="display:none;">
     <div class="card-title">Follow-Up Level</div>
     <div class="toggle-row">
-      <button class="toggle-btn active" id="tog-gentle" onclick="setConsentLevel('gentle')">Gentle Nudge</button>
-      <button class="toggle-btn" id="tog-firm" onclick="setConsentLevel('firm')">Firmer Follow-Up</button>
+      <button type="button" class="toggle-btn active" id="tog-gentle" onclick="setConsentLevel('gentle')" aria-label="Consent tone: gentle nudge">Gentle Nudge</button>
+      <button type="button" class="toggle-btn" id="tog-firm" onclick="setConsentLevel('firm')" aria-label="Consent tone: firmer follow-up">Firmer Follow-Up</button>
     </div>
   </div>
 
-  <button class="btn-generate" onclick="generateStart()">Generate Email</button>
+  <button type="button" class="btn-generate" onclick="generateStart()" aria-label="Generate therapy start email">Generate Email</button>
 
   <div class="output-card" id="s-output">
     <div class="output-header">
@@ -225,7 +225,7 @@ textarea{resize:vertical;min-height:70px;}
     <div class="subject-label">Subject Line</div>
     <div class="subject-value" id="s-subject"></div>
     <div class="email-body" id="s-body"></div>
-    <button class="btn-copy" id="s-copy" onclick="copyEmail('s')">Copy Full Email</button>
+    <button type="button" class="btn-copy" id="s-copy" onclick="copyEmail('s')" aria-label="Copy full email to clipboard">Copy Full Email</button>
   </div>
 </div>
 
@@ -248,9 +248,9 @@ textarea{resize:vertical;min-height:70px;}
   <div class="card">
     <div class="card-title">Disciplines Evaluated</div>
     <div class="disc-chip-group" id="e-disc-chips">
-      <button class="disc-chip" id="e-pt-chip" onclick="toggleEDisc('pt')">PT</button>
-      <button class="disc-chip" id="e-ot-chip" onclick="toggleEDisc('ot')">OT</button>
-      <button class="disc-chip" id="e-st-chip" onclick="toggleEDisc('st')">ST</button>
+      <button type="button" class="disc-chip" id="e-pt-chip" onclick="toggleEDisc('pt')" aria-label="Toggle physical therapy for this email">PT</button>
+      <button type="button" class="disc-chip" id="e-ot-chip" onclick="toggleEDisc('ot')" aria-label="Toggle occupational therapy for this email">OT</button>
+      <button type="button" class="disc-chip" id="e-st-chip" onclick="toggleEDisc('st')" aria-label="Toggle speech therapy for this email">ST</button>
     </div>
   </div>
 
@@ -344,7 +344,7 @@ textarea{resize:vertical;min-height:70px;}
     </div>
   </div>
 
-  <button class="btn-generate" onclick="generateEval()">Generate Email</button>
+  <button type="button" class="btn-generate" onclick="generateEval()" aria-label="Generate post-eval email">Generate Email</button>
 
   <div class="output-card" id="e-output">
     <div class="output-header">
@@ -354,7 +354,7 @@ textarea{resize:vertical;min-height:70px;}
     <div class="subject-label">Subject Line</div>
     <div class="subject-value" id="e-subject"></div>
     <div class="email-body" id="e-body"></div>
-    <button class="btn-copy" id="e-copy" onclick="copyEmail('e')">Copy Full Email</button>
+    <button type="button" class="btn-copy" id="e-copy" onclick="copyEmail('e')" aria-label="Copy full email to clipboard">Copy Full Email</button>
   </div>
 </div>
 
@@ -378,9 +378,9 @@ textarea{resize:vertical;min-height:70px;}
     <div class="card-title">Disciplines</div>
     <div class="disc-row">
       <div class="disc-chip-group" id="u-disc-chips">
-        <button class="disc-chip" id="u-pt-chip" onclick="toggleUDisc('pt')">PT</button>
-        <button class="disc-chip" id="u-ot-chip" onclick="toggleUDisc('ot')">OT</button>
-        <button class="disc-chip" id="u-st-chip" onclick="toggleUDisc('st')">ST</button>
+        <button type="button" class="disc-chip" id="u-pt-chip" onclick="toggleUDisc('pt')" aria-label="Toggle physical therapy for this email">PT</button>
+        <button type="button" class="disc-chip" id="u-ot-chip" onclick="toggleUDisc('ot')" aria-label="Toggle occupational therapy for this email">OT</button>
+        <button type="button" class="disc-chip" id="u-st-chip" onclick="toggleUDisc('st')" aria-label="Toggle speech therapy for this email">ST</button>
       </div>
     </div>
   </div>
@@ -481,7 +481,7 @@ textarea{resize:vertical;min-height:70px;}
     </div>
   </div>
 
-  <button class="btn-generate" onclick="generateUpdate()">Generate Email</button>
+  <button type="button" class="btn-generate" onclick="generateUpdate()" aria-label="Generate therapy update email">Generate Email</button>
 
   <div class="output-card" id="u-output">
     <div class="output-header">
@@ -491,7 +491,7 @@ textarea{resize:vertical;min-height:70px;}
     <div class="subject-label">Subject Line</div>
     <div class="subject-value" id="u-subject"></div>
     <div class="email-body" id="u-body"></div>
-    <button class="btn-copy" id="u-copy" onclick="copyEmail('u')">Copy Full Email</button>
+    <button type="button" class="btn-copy" id="u-copy" onclick="copyEmail('u')" aria-label="Copy full email to clipboard">Copy Full Email</button>
   </div>
 </div>
 
@@ -555,7 +555,7 @@ textarea{resize:vertical;min-height:70px;}
     </div>
   </div>
 
-  <button class="btn-generate" onclick="generateTransition()">Generate Email</button>
+  <button type="button" class="btn-generate" onclick="generateTransition()" aria-label="Generate therapy transition email">Generate Email</button>
 
   <div class="output-card" id="t-output">
     <div class="output-header">
@@ -565,7 +565,7 @@ textarea{resize:vertical;min-height:70px;}
     <div class="subject-label">Subject Line</div>
     <div class="subject-value" id="t-subject"></div>
     <div class="email-body" id="t-body"></div>
-    <button class="btn-copy" id="t-copy" onclick="copyEmail('t')">Copy Full Email</button>
+    <button type="button" class="btn-copy" id="t-copy" onclick="copyEmail('t')" aria-label="Copy full email to clipboard">Copy Full Email</button>
   </div>
 </div>
 
@@ -598,13 +598,13 @@ textarea{resize:vertical;min-height:70px;}
     <div id="linkList">
       <div class="link-row">
         <input type="text" class="link-input" placeholder="Paste purchase link here">
-        <button class="link-rm-btn" onclick="removeLink(this)">Remove</button>
+        <button type="button" class="link-rm-btn" onclick="removeLink(this)" aria-label="Remove link row">Remove</button>
       </div>
     </div>
-    <button class="add-link-btn" onclick="addLink()">+ Add Link</button>
+    <button type="button" class="add-link-btn" onclick="addLink()" aria-label="Add purchase link row">+ Add Link</button>
   </div>
 
-  <button class="btn-generate" onclick="generateFall()">Generate Email</button>
+  <button type="button" class="btn-generate" onclick="generateFall()" aria-label="Generate fall follow-up email">Generate Email</button>
 
   <div class="output-card" id="f-output">
     <div class="output-header">
@@ -614,7 +614,7 @@ textarea{resize:vertical;min-height:70px;}
     <div class="subject-label">Subject Line</div>
     <div class="subject-value" id="f-subject"></div>
     <div class="email-body" id="f-body"></div>
-    <button class="btn-copy" id="f-copy" onclick="copyEmail('f')">Copy Full Email</button>
+    <button type="button" class="btn-copy" id="f-copy" onclick="copyEmail('f')" aria-label="Copy full email to clipboard">Copy Full Email</button>
   </div>
 </div>
 
@@ -632,7 +632,7 @@ textarea{resize:vertical;min-height:70px;}
 &#8226; Health and Wellness is a private pay service and does not go through insurance, so there are no visit limits or authorization requirements.<br><br>
 &#8226; Residents can start or stop at any time. There is no contract or obligation.
       </div>
-      <button class="ref-copy-btn" onclick="copyRef('hw-points', this)">Copy</button>
+      <button type="button" class="ref-copy-btn" onclick="copyRef('hw-points', this)" aria-label="Copy health and wellness reference text">Copy</button>
     </div>
   </div>
 
@@ -648,7 +648,7 @@ textarea{resize:vertical;min-height:70px;}
 &#8226; "I understand the concern. The good news is that we are not taking anything away. Those visits remain available, and if there is ever a new skilled need, we can get therapy started again quickly."<br><br>
 &#8226; "Our Health and Wellness Program is a great option for continuing to work on strength and mobility in the meantime, without using any insurance visits."
       </div>
-      <button class="ref-copy-btn" onclick="copyRef('ins-points', this)">Copy</button>
+      <button type="button" class="ref-copy-btn" onclick="copyRef('ins-points', this)" aria-label="Copy insurance reference text">Copy</button>
     </div>
   </div>
 
@@ -1413,7 +1413,7 @@ function copyRef(id, btn) {
 function addLink() {
   var row = document.createElement('div');
   row.className = 'link-row';
-  row.innerHTML = '<input type="text" class="link-input" placeholder="Paste purchase link here"><button class="link-rm-btn" onclick="removeLink(this)">Remove</button>';
+  row.innerHTML = '<input type="text" class="link-input" placeholder="Paste purchase link here"><button type="button" class="link-rm-btn" onclick="removeLink(this)" aria-label="Remove link row">Remove</button>';
   document.getElementById('linkList').appendChild(row);
 }
 
