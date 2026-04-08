@@ -91,8 +91,10 @@ textarea{resize:vertical;min-height:70px;}
 .visits-field.show{display:block;}
 
 /* BUTTONS */
-.btn-generate{width:100%;background:var(--blue);border:none;color:#fff;font-family:"Mulish",sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:15px;border-radius:8px;cursor:pointer;transition:opacity .15s;margin-bottom:20px;}
+.btn-generate{width:100%;background:var(--blue);border:none;color:#fff;font-family:"Mulish",sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:15px;border-radius:8px;cursor:pointer;transition:opacity .15s;margin-bottom:12px;}
 .btn-generate:hover{opacity:.88;}
+.btn-clear{width:100%;background:none;border:1px solid var(--border);border-radius:8px;color:var(--muted);font-family:"Mulish",sans-serif;font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:10px;cursor:pointer;transition:all .15s;margin-bottom:20px;}
+.btn-clear:hover{border-color:var(--red);color:var(--red);}
 
 /* OUTPUT */
 .output-card{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:24px;display:none;}
@@ -217,6 +219,7 @@ textarea{resize:vertical;min-height:70px;}
   </div>
 
   <button type="button" class="btn-generate" onclick="generateStart()" aria-label="Generate therapy start email">Generate Email</button>
+  <button type="button" class="btn-clear" onclick="clearTab('start')">Clear All</button>
 
   <div class="output-card" id="s-output">
     <div class="output-header">
@@ -346,6 +349,7 @@ textarea{resize:vertical;min-height:70px;}
   </div>
 
   <button type="button" class="btn-generate" onclick="generateEval()" aria-label="Generate post-eval email">Generate Email</button>
+  <button type="button" class="btn-clear" onclick="clearTab('eval')">Clear All</button>
 
   <div class="output-card" id="e-output">
     <div class="output-header">
@@ -483,6 +487,7 @@ textarea{resize:vertical;min-height:70px;}
   </div>
 
   <button type="button" class="btn-generate" onclick="generateUpdate()" aria-label="Generate therapy update email">Generate Email</button>
+  <button type="button" class="btn-clear" onclick="clearTab('update')">Clear All</button>
 
   <div class="output-card" id="u-output">
     <div class="output-header">
@@ -557,6 +562,7 @@ textarea{resize:vertical;min-height:70px;}
   </div>
 
   <button type="button" class="btn-generate" onclick="generateTransition()" aria-label="Generate therapy transition email">Generate Email</button>
+  <button type="button" class="btn-clear" onclick="clearTab('transition')">Clear All</button>
 
   <div class="output-card" id="t-output">
     <div class="output-header">
@@ -605,6 +611,7 @@ textarea{resize:vertical;min-height:70px;}
   </div>
 
   <button type="button" class="btn-generate" onclick="generateFall()" aria-label="Generate fall follow-up email">Generate Email</button>
+  <button type="button" class="btn-clear" onclick="clearTab('fall')">Clear All</button>
 
   <div class="output-card" id="f-output">
     <div class="output-header">
@@ -959,7 +966,7 @@ function generateStart() {
 
 // ── POST-EVAL SECTION TOGGLES ──
 function toggleEvalSection(disc) {
-  var checked = document.getElementById('e-' + disc).checked;
+  var checked = eDiscs[disc];
   document.getElementById('eval-' + disc + '-card').style.display = checked ? 'block' : 'none';
   if (!checked) {
     document.querySelectorAll('.e-' + disc + '-goal').forEach(function(cb) { cb.checked = false; });
@@ -1157,7 +1164,7 @@ function selectFreqChange(el, val) {
 }
 
 function toggleUpdateDisc(disc) {
-  var checked = document.getElementById('u-' + disc).checked;
+  var checked = uDiscs[disc];
   document.getElementById('update-' + disc + '-freq').style.display = checked ? 'block' : 'none';
   if (!checked) {
     document.getElementById('u-' + disc + '-freq').value = '';
@@ -1356,6 +1363,76 @@ function generateFall() {
   document.getElementById('f-subject').textContent = subject;
   document.getElementById('f-body').textContent = body;
   showOutput('f');
+}
+
+// ── CLEAR ALL ──
+function clearTab(tab) {
+  if (tab === 'start') {
+    document.getElementById('s-resident').value = '';
+    document.getElementById('s-poa').value = '';
+    sDiscs = {pt:false, ot:false, st:false};
+    ['pt','ot','st'].forEach(function(d) {
+      var chip = document.getElementById('s-'+d+'-chip');
+      chip.className = 'disc-chip';
+    });
+    document.getElementById('stFocusField').style.display = 'none';
+    document.querySelectorAll('input[name="stFocus"]').forEach(function(r){r.checked=false;});
+    document.getElementById('s-reason').value = '';
+    document.getElementById('customReasonField').style.display = 'none';
+    document.getElementById('s-custom-reason').value = '';
+    setReferralType('existing');
+    document.getElementById('s-output').classList.remove('visible');
+  } else if (tab === 'eval') {
+    document.getElementById('e-resident').value = '';
+    document.getElementById('e-poa').value = '';
+    eDiscs = {pt:false, ot:false, st:false};
+    ['pt','ot','st'].forEach(function(d) {
+      document.getElementById('e-'+d+'-chip').className = 'disc-chip';
+      document.getElementById('eval-'+d+'-card').style.display = 'none';
+      document.querySelectorAll('.e-'+d+'-goal').forEach(function(cb){cb.checked=false;});
+      var custom = document.getElementById('e-'+d+'-custom');
+      if (custom) custom.value = '';
+    });
+    document.querySelectorAll('input[name="e-st-focus"]').forEach(function(r){r.checked=false;});
+    document.getElementById('eval-st-swallow').style.display = 'none';
+    document.getElementById('eval-st-cognition').style.display = 'none';
+    ['pt','ot','st'].forEach(function(d) {
+      document.getElementById('e-'+d+'-freq').value = '';
+      document.getElementById('e-'+d+'-weeks').value = '';
+    });
+    document.getElementById('e-output').classList.remove('visible');
+  } else if (tab === 'update') {
+    document.getElementById('u-resident').value = '';
+    document.getElementById('u-poa').value = '';
+    uDiscs = {pt:false, ot:false, st:false};
+    ['pt','ot','st'].forEach(function(d) {
+      document.getElementById('u-'+d+'-chip').className = 'disc-chip';
+      document.getElementById('update-'+d+'-freq').style.display = 'none';
+      document.getElementById('u-'+d+'-freq').value = '';
+      document.getElementById('u-'+d+'-weeks').value = '';
+    });
+    document.getElementById('u-comments').value = '';
+    document.getElementById('statusGroup').querySelectorAll('.reason-option').forEach(function(o){o.classList.remove('selected');});
+    document.getElementById('freqChangeGroup').querySelectorAll('.reason-option').forEach(function(o){o.classList.remove('selected');});
+    selectedStatus = null;
+    selectedFreqChange = null;
+    document.getElementById('u-output').classList.remove('visible');
+  } else if (tab === 'transition') {
+    document.getElementById('t-resident').value = '';
+    document.getElementById('t-poa').value = '';
+    document.getElementById('panel-transition').querySelectorAll('.reason-option').forEach(function(o){o.classList.remove('selected');});
+    selectedReason = null;
+    document.getElementById('visitsField').classList.remove('show');
+    document.getElementById('visitsRemaining').value = '';
+    document.getElementById('t-output').classList.remove('visible');
+  } else if (tab === 'fall') {
+    document.getElementById('f-resident').value = '';
+    document.getElementById('f-poa').value = '';
+    document.getElementById('f-intervention').value = '';
+    var list = document.getElementById('linkList');
+    list.innerHTML = '<div class="link-row"><input type="text" class="link-input" placeholder="Paste purchase link here"><button type="button" class="link-rm-btn" onclick="removeLink(this)" aria-label="Remove link row">Remove</button></div>';
+    document.getElementById('f-output').classList.remove('visible');
+  }
 }
 
 // ── HELPERS ──
