@@ -589,7 +589,6 @@ textarea{resize:vertical;min-height:70px;}
   <div class="card">
     <div class="card-title">Intervention</div>
     <div class="field">
-      <label>What was recommended or put in place?</label>
       <input type="text" id="f-intervention" placeholder="e.g. bed cane and fall mat">
     </div>
   </div>
@@ -1321,7 +1320,7 @@ function generateFall() {
   var poa = document.getElementById('f-poa').value.trim();
   var intervention = document.getElementById('f-intervention').value.trim();
   if (!resident || !poa) { alert('Please enter the resident name and family contact name.'); return; }
-  if (!intervention) { alert('Please enter what was recommended or put in place.'); return; }
+  if (!intervention) { alert('Please enter the intervention details.'); return; }
 
   var links = [];
   document.querySelectorAll('.link-input').forEach(function(el) {
