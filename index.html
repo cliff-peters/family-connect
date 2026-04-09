@@ -68,6 +68,12 @@ textarea{resize:vertical;min-height:70px;}
 .disc-check{display:flex;align-items:center;gap:6px;cursor:pointer;}
 .disc-check input{accent-color:var(--blue);width:18px;height:18px;cursor:pointer;}
 .disc-check span{font-size:.92rem;font-weight:600;}
+
+/* GOAL CHIPS */
+.goal-chip-group{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+.goal-chip{padding:7px 16px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);font-family:"Mulish",sans-serif;font-size:.85rem;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s;}
+.goal-chip:hover{border-color:var(--blue);color:var(--blue);}
+.goal-chip.selected{background:rgba(90,157,230,0.12);border-color:var(--blue);color:var(--blue);box-shadow:0 0 0 3px rgba(90,157,230,0.1);}
 .disc-chip-group{display:flex;gap:8px;flex-wrap:wrap;}
 .disc-chip{padding:7px 18px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);font-family:"Mulish",sans-serif;font-size:.88rem;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s;user-select:none;}
 .disc-chip:hover{border-color:var(--blue);color:var(--blue);}
@@ -260,11 +266,14 @@ textarea{resize:vertical;min-height:70px;}
 
   <div class="card" id="eval-pt-card" style="display:none;">
     <div class="card-title">PT Goals</div>
-    <div class="disc-row" style="flex-direction:column;gap:10px;">
-      <label class="disc-check"><input type="checkbox" class="e-pt-goal" value="Improve transfer safety"><span>Improve transfer safety</span></label>
-      <label class="disc-check"><input type="checkbox" class="e-pt-goal" value="Increase ambulation distance"><span>Increase ambulation distance</span></label>
-      <label class="disc-check"><input type="checkbox" class="e-pt-goal" value="Improve balance"><span>Improve balance</span></label>
-      <label class="disc-check"><input type="checkbox" class="e-pt-goal" value="Reduce fall risk"><span>Reduce fall risk</span></label>
+    <div class="goal-chip-group">
+      <button type="button" class="goal-chip e-pt-goal" data-value="Improve transfer safety" onclick="toggleGoalChip(this)">Transfer Safety</button>
+      <button type="button" class="goal-chip e-pt-goal" data-value="Increase ambulation distance" onclick="toggleGoalChip(this)">Ambulation Distance</button>
+      <button type="button" class="goal-chip e-pt-goal" data-value="Improve balance" onclick="toggleGoalChip(this)">Balance</button>
+      <button type="button" class="goal-chip e-pt-goal" data-value="Reduce fall risk" onclick="toggleGoalChip(this)">Fall Risk</button>
+      <button type="button" class="goal-chip e-pt-goal" data-value="Improve bed mobility" onclick="toggleGoalChip(this)">Bed Mobility</button>
+      <button type="button" class="goal-chip e-pt-goal" data-value="Improve endurance" onclick="toggleGoalChip(this)">Endurance</button>
+      <button type="button" class="goal-chip e-pt-goal" data-value="Improve strength" onclick="toggleGoalChip(this)">Strength</button>
     </div>
     <div class="field" style="margin-top:12px;">
       <label>Additional PT Goals</label>
@@ -284,15 +293,15 @@ textarea{resize:vertical;min-height:70px;}
 
   <div class="card" id="eval-ot-card" style="display:none;">
     <div class="card-title">OT Goals</div>
-    <div class="disc-row" style="flex-direction:column;gap:10px;">
-      <label class="disc-check"><input type="checkbox" class="e-ot-goal" value="Improve dressing independence"><span>Improve dressing independence</span></label>
-      <label class="disc-check"><input type="checkbox" class="e-ot-goal" value="Improve bathing safety"><span>Improve bathing safety</span></label>
-      <label class="disc-check"><input type="checkbox" class="e-ot-goal" value="Improve grooming independence"><span>Improve grooming independence</span></label>
-      <label class="disc-check"><input type="checkbox" class="e-ot-goal" value="Improve self feeding"><span>Improve self feeding</span></label>
-      <label class="disc-check"><input type="checkbox" class="e-ot-goal" value="Improve toilet transfer safety"><span>Improve toilet transfer safety</span></label>
-      <label class="disc-check"><input type="checkbox" class="e-ot-goal" value="Improve upper extremity strength"><span>Improve upper extremity strength</span></label>
-      <label class="disc-check"><input type="checkbox" class="e-ot-goal" value="Improve home safety awareness"><span>Improve home safety awareness</span></label>
-      <label class="disc-check"><input type="checkbox" class="e-ot-goal" value="Improve medication management"><span>Improve medication management</span></label>
+    <div class="goal-chip-group">
+      <button type="button" class="goal-chip e-ot-goal" data-value="Improve dressing independence" onclick="toggleGoalChip(this)">Dressing Independence</button>
+      <button type="button" class="goal-chip e-ot-goal" data-value="Improve bathing safety" onclick="toggleGoalChip(this)">Bathing Safety</button>
+      <button type="button" class="goal-chip e-ot-goal" data-value="Improve grooming independence" onclick="toggleGoalChip(this)">Grooming Independence</button>
+      <button type="button" class="goal-chip e-ot-goal" data-value="Improve self feeding" onclick="toggleGoalChip(this)">Self Feeding</button>
+      <button type="button" class="goal-chip e-ot-goal" data-value="Improve toilet transfer safety" onclick="toggleGoalChip(this)">Toilet Transfer Safety</button>
+      <button type="button" class="goal-chip e-ot-goal" data-value="Improve upper extremity strength" onclick="toggleGoalChip(this)">UE Strength</button>
+      <button type="button" class="goal-chip e-ot-goal" data-value="Improve home safety awareness" onclick="toggleGoalChip(this)">Home Safety Awareness</button>
+      <button type="button" class="goal-chip e-ot-goal" data-value="Improve medication management" onclick="toggleGoalChip(this)">Medication Management</button>
     </div>
     <div class="field" style="margin-top:12px;">
       <label>Additional OT Goals</label>
@@ -317,19 +326,19 @@ textarea{resize:vertical;min-height:70px;}
       <label class="disc-check"><input type="radio" name="e-st-focus" value="cognition" onchange="toggleStGoals()" style="accent-color:var(--blue);width:16px;height:16px;cursor:pointer;"><span>Cognition</span></label>
     </div>
     <div id="eval-st-swallow" style="display:none;">
-      <div class="disc-row" style="flex-direction:column;gap:10px;">
-        <label class="disc-check"><input type="checkbox" class="e-st-goal" value="Improve swallow safety"><span>Improve swallow safety</span></label>
-        <label class="disc-check"><input type="checkbox" class="e-st-goal" value="Reduce aspiration risk"><span>Reduce aspiration risk</span></label>
-        <label class="disc-check"><input type="checkbox" class="e-st-goal" value="Improve diet tolerance"><span>Improve diet tolerance</span></label>
-        <label class="disc-check"><input type="checkbox" class="e-st-goal" value="Improve oral intake"><span>Improve oral intake</span></label>
+      <div class="goal-chip-group">
+        <button type="button" class="goal-chip e-st-goal" data-value="Improve swallow safety" onclick="toggleGoalChip(this)">Swallow Safety</button>
+        <button type="button" class="goal-chip e-st-goal" data-value="Reduce aspiration risk" onclick="toggleGoalChip(this)">Aspiration Risk</button>
+        <button type="button" class="goal-chip e-st-goal" data-value="Improve diet tolerance" onclick="toggleGoalChip(this)">Diet Tolerance</button>
+        <button type="button" class="goal-chip e-st-goal" data-value="Improve oral intake" onclick="toggleGoalChip(this)">Oral Intake</button>
       </div>
     </div>
     <div id="eval-st-cognition" style="display:none;">
-      <div class="disc-row" style="flex-direction:column;gap:10px;">
-        <label class="disc-check"><input type="checkbox" class="e-st-goal" value="Improve memory"><span>Improve memory</span></label>
-        <label class="disc-check"><input type="checkbox" class="e-st-goal" value="Improve attention and focus"><span>Improve attention and focus</span></label>
-        <label class="disc-check"><input type="checkbox" class="e-st-goal" value="Improve problem solving"><span>Improve problem solving</span></label>
-        <label class="disc-check"><input type="checkbox" class="e-st-goal" value="Improve safety awareness"><span>Improve safety awareness</span></label>
+      <div class="goal-chip-group">
+        <button type="button" class="goal-chip e-st-goal" data-value="Improve memory" onclick="toggleGoalChip(this)">Memory</button>
+        <button type="button" class="goal-chip e-st-goal" data-value="Improve attention and focus" onclick="toggleGoalChip(this)">Attention &amp; Focus</button>
+        <button type="button" class="goal-chip e-st-goal" data-value="Improve problem solving" onclick="toggleGoalChip(this)">Problem Solving</button>
+        <button type="button" class="goal-chip e-st-goal" data-value="Improve safety awareness" onclick="toggleGoalChip(this)">Safety Awareness</button>
       </div>
     </div>
     <div class="field" style="margin-top:12px;">
@@ -725,7 +734,7 @@ function toggleEDisc(d) {
   chip.classList.toggle(d+'-on', eDiscs[d]);
   toggleEvalSection(d);
   if (!eDiscs[d]) {
-    document.querySelectorAll('.e-'+d+'-goal').forEach(function(cb){cb.checked=false;});
+    document.querySelectorAll('.e-'+d+'-goal').forEach(function(btn){btn.classList.remove('selected');});
     var custom = document.getElementById('e-'+d+'-custom');
     if (custom) custom.value = '';
     if (d === 'st') {
@@ -969,7 +978,7 @@ function toggleEvalSection(disc) {
   var checked = eDiscs[disc];
   document.getElementById('eval-' + disc + '-card').style.display = checked ? 'block' : 'none';
   if (!checked) {
-    document.querySelectorAll('.e-' + disc + '-goal').forEach(function(cb) { cb.checked = false; });
+    document.querySelectorAll('.e-' + disc + '-goal').forEach(function(btn) { btn.classList.remove('selected'); });
     var custom = document.getElementById('e-' + disc + '-custom');
     if (custom) custom.value = '';
     if (disc === 'st') {
@@ -985,14 +994,15 @@ function toggleStGoals() {
   var val = selected ? selected.value : '';
   document.getElementById('eval-st-swallow').style.display = (val === 'swallow') ? 'block' : 'none';
   document.getElementById('eval-st-cognition').style.display = (val === 'cognition') ? 'block' : 'none';
-  document.querySelectorAll('.e-st-goal').forEach(function(cb) { cb.checked = false; });
+  document.querySelectorAll('.e-st-goal').forEach(function(btn) { btn.classList.remove('selected'); });
 }
+
+function toggleGoalChip(el) { el.classList.toggle('selected'); }
 
 function getEvalGoals(disc) {
   var goals = [];
-  document.querySelectorAll('.e-' + disc + '-goal:checked').forEach(function(cb) {
-    var val = cb.value.toLowerCase();
-    // Strip leading "improve " or "reduce " for cleaner grouping
+  document.querySelectorAll('.e-' + disc + '-goal.selected').forEach(function(btn) {
+    var val = btn.dataset.value.toLowerCase();
     val = val.replace(/^improve /, '').replace(/^reduce /, '').replace(/^increase /, '');
     goals.push(val);
   });
@@ -1389,7 +1399,7 @@ function clearTab(tab) {
     ['pt','ot','st'].forEach(function(d) {
       document.getElementById('e-'+d+'-chip').className = 'disc-chip';
       document.getElementById('eval-'+d+'-card').style.display = 'none';
-      document.querySelectorAll('.e-'+d+'-goal').forEach(function(cb){cb.checked=false;});
+      document.querySelectorAll('.e-'+d+'-goal').forEach(function(btn){btn.classList.remove('selected');});
       var custom = document.getElementById('e-'+d+'-custom');
       if (custom) custom.value = '';
     });
