@@ -3,24 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<!--
+  Content Security Policy.
+  connect-src 'none' blocks fetch/XHR/beacon outright, so no resident data can
+  leave this page even if a future edit accidentally adds a network call.
+  form-action 'none' blocks form submission. img-src data: allows the favicon.
+  The two font entries are the ONLY external requests this page can make.
+  To go fully offline, self-host Mulish, drop the <link> below, and change
+  style-src to 'unsafe-inline' and font-src to 'none'.
+-->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src data:; connect-src 'none'; form-action 'none'; base-uri 'none'">
 <title>Family Connect – The DOR Suite</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNGE5MGQ5Ii8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjM2VjZjdhIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0idXJsKCNnKSIvPjx0ZXh0IHg9IjE2IiB5PSIyMiIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSI5MDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMwYzBmMTQiPkNQPC90ZXh0Pjwvc3ZnPg=="/><link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJnIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjNGE5MGQ5Ii8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjM2VjZjdhIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0idXJsKCNnKSIvPjx0ZXh0IHg9IjE2IiB5PSIyMiIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSI5MDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMwYzBmMTQiPkNQPC90ZXh0Pjwvc3ZnPg=="/>
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+button,input,select,textarea{font-family:inherit;}
 :root{
   --bg:#0c0f14;--surface:#181d28;--surface2:#1e2430;--border:#333a48;
   --text:#f0f2f5;--muted:#9ca3b4;
   --blue:#5a9de6;--green:#3ecf7a;--amber:#f0a830;--red:#ef4444;--teal:#2dd4bf;
   --logo-gradient:linear-gradient(135deg,#4a90d9,#3ecf7a);--logo-text:#0c0f14;
 }
-body{font-family:"Mulish",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:40px 16px 80px;}
+body{font-family:"Mulish","Segoe UI",system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:40px 16px 80px;}
 .wrap{max-width:720px;margin:0 auto;}
 h1{font-size:1.9rem;font-weight:800;line-height:1.2;margin-bottom:28px;}
 h1 span span{color:var(--blue);}
 
 /* TABS */
 .tab-row{display:flex;gap:0;margin-bottom:24px;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;}
-.tab-btn{flex:1;background:var(--surface);border:none;color:var(--muted);font-family:"Mulish",sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:14px 8px;cursor:pointer;transition:all .15s;}
+.tab-btn{flex:1;background:var(--surface);border:none;color:var(--muted);font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:14px 8px;cursor:pointer;transition:all .15s;}
 .tab-btn:not(:last-child){border-right:1.5px solid var(--border);}
 .tab-btn.active{background:var(--blue);color:#fff;}
 .tab-btn:hover:not(.active){color:var(--text);}
@@ -37,99 +50,89 @@ h1 span span{color:var(--blue);}
 .field{display:flex;flex-direction:column;gap:5px;}
 .field.full{grid-column:1/-1;}
 label{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
-input[type="text"],textarea{background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:"Mulish",sans-serif;font-size:.95rem;padding:11px 13px;transition:border .15s;}
+input[type="text"],textarea{background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:.95rem;padding:11px 13px;transition:border .15s;}
 input[type="text"]:focus,textarea:focus{outline:none;border-color:var(--blue);}
 textarea{resize:vertical;min-height:70px;}
+.card-note{font-size:.72rem;color:var(--muted);margin-top:9px;line-height:1.5;}
 
-/* REFERENCE */
-.ref-section{margin-bottom:20px;}
-.ref-title{font-size:.9rem;font-weight:700;color:var(--blue);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);}
-.ref-item{margin-bottom:14px;}
-.ref-q{font-size:.92rem;font-weight:700;color:var(--text);margin-bottom:4px;}
-.ref-a{font-size:.88rem;color:var(--muted);line-height:1.7;}
-.ref-table{width:100%;border-collapse:collapse;font-size:.88rem;margin-top:8px;}
-.ref-table th{text-align:left;padding:10px 12px;background:var(--surface2);color:var(--blue);font-weight:700;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--border);}
-.ref-table td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text);line-height:1.5;}
-.ref-table tr:last-child td{border-bottom:none;}
-.ref-bullet{color:var(--muted);font-size:.88rem;line-height:1.8;padding-left:4px;}
-.ref-copy-btn{background:transparent;border:1px solid var(--border);border-radius:4px;color:var(--muted);font-family:"Mulish",sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:5px 12px;cursor:pointer;transition:all .13s;margin-top:6px;}
-.ref-copy-btn:hover{border-color:var(--blue);color:var(--blue);}
-.ref-copy-btn.copied{background:var(--blue);color:#fff;border-color:var(--blue);}
+/* VALIDATION */
+.field-error{font-size:.75rem;font-weight:600;color:var(--red);min-height:0;}
+.field-error:empty{display:none;}
+input[aria-invalid="true"],select[aria-invalid="true"]{border-color:var(--red)!important;}
 
 /* TOGGLE ROW */
 .toggle-row{display:flex;gap:0;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;}
-.toggle-btn{flex:1;background:var(--surface2);border:none;color:var(--muted);font-family:"Mulish",sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.06em;padding:12px 8px;cursor:pointer;transition:all .15s;}
+.toggle-btn{flex:1;background:var(--surface2);border:none;color:var(--muted);font-size:.85rem;font-weight:700;letter-spacing:.06em;padding:12px 8px;cursor:pointer;transition:all .15s;}
 .toggle-btn:not(:last-child){border-right:1.5px solid var(--border);}
 .toggle-btn.active{background:var(--blue);color:#fff;}
 .toggle-btn:hover:not(.active){color:var(--text);}
 
-/* CHECKBOXES */
-.disc-row{display:flex;gap:16px;flex-wrap:wrap;}
-.disc-check{display:flex;align-items:center;gap:6px;cursor:pointer;}
-.disc-check input{accent-color:var(--blue);width:18px;height:18px;cursor:pointer;}
-.disc-check span{font-size:.92rem;font-weight:600;}
-
-/* GOAL CHIPS */
-.goal-chip-group{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
-.goal-chip{padding:7px 16px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);font-family:"Mulish",sans-serif;font-size:.85rem;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s;}
-.goal-chip:hover{border-color:var(--blue);color:var(--blue);}
-.goal-chip.selected{background:rgba(90,157,230,0.12);border-color:var(--blue);color:var(--blue);box-shadow:0 0 0 3px rgba(90,157,230,0.1);}
+/* DISCIPLINE CHIPS */
 .disc-chip-group{display:flex;gap:8px;flex-wrap:wrap;}
-.disc-chip{padding:7px 18px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);font-family:"Mulish",sans-serif;font-size:.88rem;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s;user-select:none;}
+.disc-chip{padding:7px 18px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);font-size:.88rem;font-weight:700;color:var(--muted);cursor:pointer;transition:all .15s;user-select:none;}
 .disc-chip:hover{border-color:var(--blue);color:var(--blue);}
 .disc-chip.pt-on{background:rgba(90,157,230,0.12);border-color:var(--blue);color:var(--blue);}
 .disc-chip.ot-on{background:rgba(240,168,48,0.12);border-color:var(--amber);color:var(--amber);}
 .disc-chip.st-on{background:rgba(62,207,122,0.12);border-color:var(--green);color:var(--green);}
 
-/* REASON SELECT */
-.reason-group{display:flex;flex-direction:column;gap:10px;}
-.reason-option{display:flex;align-items:flex-start;gap:12px;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;padding:14px 16px;cursor:pointer;transition:all .15s;}
-.reason-option:hover{border-color:var(--blue);}
-.reason-option.selected{border-color:var(--blue);background:rgba(90,157,230,0.14);}
-.reason-option input[type="radio"]{display:none;}
-.radio-dot{width:18px;height:18px;min-width:18px;border-radius:50%;border:2px solid var(--border);margin-top:2px;transition:all .15s;position:relative;}
-.reason-option.selected .radio-dot{border-color:var(--blue);background:var(--blue);}
-.reason-label{font-size:.95rem;font-weight:700;margin-bottom:2px;}
-.reason-sublabel{font-size:.85rem;color:var(--muted);line-height:1.4;}
-
-/* VISITS FIELD */
-.visits-field{display:none;margin-top:14px;}
-.visits-field.show{display:block;}
+/* SELECT */
+.select-input{background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:.88rem;padding:10px 12px;width:100%;cursor:pointer;}
+.select-input:focus{outline:none;border-color:var(--blue);}
 
 /* BUTTONS */
-.btn-generate{width:100%;background:var(--blue);border:none;color:#fff;font-family:"Mulish",sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:15px;border-radius:8px;cursor:pointer;transition:opacity .15s;margin-bottom:12px;}
+.btn-generate{width:100%;background:var(--blue);border:none;color:#fff;font-size:.85rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:15px;border-radius:8px;cursor:pointer;transition:opacity .15s;margin-bottom:12px;}
 .btn-generate:hover{opacity:.88;}
-.btn-clear{width:100%;background:none;border:1px solid var(--border);border-radius:8px;color:var(--muted);font-family:"Mulish",sans-serif;font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:10px;cursor:pointer;transition:all .15s;margin-bottom:20px;}
+.btn-clear{width:100%;background:none;border:1px solid var(--border);border-radius:8px;color:var(--muted);font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:10px;cursor:pointer;transition:all .15s;margin-bottom:20px;}
 .btn-clear:hover{border-color:var(--red);color:var(--red);}
 
 /* OUTPUT */
 .output-card{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:24px;display:none;}
 .output-card.visible{display:block;border-left:3px solid #5a9de6;border-color:rgba(90,157,230,0.3);box-shadow:0 4px 24px rgba(90,157,230,0.07);}
-.output-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+.output-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:12px;}
 .output-title{font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);}
-.tag{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);background:rgba(62,207,122,.1);padding:4px 10px;border-radius:4px;}
+.tag{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);background:rgba(62,207,122,.1);padding:4px 10px;border-radius:4px;white-space:nowrap;}
+.tag.stale{color:var(--amber);background:rgba(240,168,48,.12);}
 .subject-label{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
 .subject-value{font-size:1.02rem;font-weight:700;margin-bottom:16px;color:var(--text);}
 .email-body{font-size:.95rem;line-height:1.8;white-space:pre-wrap;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:18px;margin-bottom:16px;}
-.btn-copy{background:transparent;border:1.5px solid var(--blue);color:var(--blue);font-family:"Mulish",sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:10px 20px;border-radius:6px;cursor:pointer;transition:all .13s;}
-.btn-copy:hover,.btn-copy.copied{background:var(--blue);color:#fff;}
+.btn-copy{background:transparent;border:1.5px solid var(--blue);color:var(--blue);font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:10px 20px;border-radius:6px;cursor:pointer;transition:all .13s;}
+.btn-copy:hover:not(:disabled),.btn-copy.copied{background:var(--blue);color:#fff;}
+.btn-copy:disabled{border-color:var(--border);color:var(--muted);cursor:not-allowed;background:transparent;}
+
+/* STALE BANNER */
+.stale-banner{display:none;background:rgba(240,168,48,.1);border:1px solid rgba(240,168,48,.35);border-radius:8px;color:var(--amber);font-size:.82rem;font-weight:600;line-height:1.5;padding:12px 14px;margin-bottom:16px;}
+.stale-banner.visible{display:block;}
 
 /* FALL PANEL EXTRAS */
 .link-row{display:flex;gap:10px;margin-bottom:10px;}
-.link-row input{flex:1;}
-.link-rm-btn{background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-family:"Mulish",sans-serif;font-size:.75rem;font-weight:600;padding:8px 14px;cursor:pointer;transition:all .13s;white-space:nowrap;}
+.link-row input{flex:1;min-width:0;}
+.link-rm-btn{background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:.75rem;font-weight:600;padding:8px 14px;cursor:pointer;transition:all .13s;white-space:nowrap;}
 .link-rm-btn:hover{border-color:var(--red);color:var(--red);}
-.add-link-btn{background:transparent;border:1px dashed var(--border);border-radius:6px;color:var(--muted);font-family:"Mulish",sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;cursor:pointer;transition:all .13s;margin-top:4px;}
+.add-link-btn{background:transparent;border:1px dashed var(--border);border-radius:6px;color:var(--muted);font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:8px 16px;cursor:pointer;transition:all .13s;margin-top:4px;}
 .add-link-btn:hover{border-color:var(--blue);color:var(--blue);}
 
+/* TOAST */
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.85rem;font-weight:600;padding:13px 20px;max-width:90vw;box-shadow:0 8px 28px rgba(0,0,0,.45);z-index:10000;}
+#toast[hidden]{display:none;}
+
 .footer{margin-top:48px;padding:24px 16px;display:flex;align-items:center;justify-content:center;gap:8px;border-top:1px solid var(--border);}
-.footer-logo{width:18px;height:18px;background:var(--logo-gradient);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:800;color:var(--logo-text);flex-shrink:0;font-family:"Mulish",sans-serif;}
+.footer-logo{width:18px;height:18px;background:var(--logo-gradient);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:800;color:var(--logo-text);flex-shrink:0;}
 .footer-text{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.04em;}
+
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px;}
 
 @media(max-width:560px){
   .fields{grid-template-columns:1fr;}
   .tab-row{flex-wrap:wrap;}
   .tab-btn{font-size:.7rem;padding:11px 6px;}
+  .link-row{flex-direction:column;}
+}
+
+@media print{
+  body{background:#fff;color:#000;padding:0;}
+  .tab-row,.card,.btn-generate,.btn-clear,.stale-banner,.footer,#toast,[style*="position:fixed"]{display:none!important;}
+  .output-card{display:block!important;border:0;box-shadow:none;padding:0;}
+  .email-body{background:#fff;border:0;color:#000;}
 }
 </style>
 </head>
@@ -145,17 +148,14 @@ textarea{resize:vertical;min-height:70px;}
 <div class="card" style="margin-bottom:20px;">
   <div class="card-title">Facility</div>
   <div class="field" style="max-width:360px;">
-    <input type="text" id="facilityName" value="" placeholder="Enter your facility name">
+    <input type="text" id="facilityName" value="The Virginian" placeholder="Enter your facility name">
   </div>
+  <p class="card-note">Facility name is saved in this browser. Resident and family names are never saved and clear when you close the tab.</p>
 </div>
 
 <div class="tab-row">
   <button type="button" class="tab-btn active" id="tab-start" onclick="switchTab('start')" aria-label="Email: therapy start">Therapy Start</button>
-  <button type="button" class="tab-btn" id="tab-eval" onclick="switchTab('eval')" aria-label="Email: post-eval">Post-Eval</button>
-  <button type="button" class="tab-btn" id="tab-update" onclick="switchTab('update')" aria-label="Email: therapy update">Therapy Update</button>
-  <button type="button" class="tab-btn" id="tab-transition" onclick="switchTab('transition')" aria-label="Email: therapy transition">Therapy Transition</button>
   <button type="button" class="tab-btn" id="tab-fall" onclick="switchTab('fall')" aria-label="Email: fall follow-up">Fall Follow-Up</button>
-  <button type="button" class="tab-btn" id="tab-ref" onclick="switchTab('ref')" aria-label="Quick reference">Quick Reference</button>
 </div>
 
 <!-- ========== THERAPY START PANEL ========== -->
@@ -173,46 +173,54 @@ textarea{resize:vertical;min-height:70px;}
     <div class="card-title">Resident &amp; Contact</div>
     <div class="fields">
       <div class="field">
-        <label>Resident First Name</label>
-        <input type="text" id="s-resident" placeholder="e.g. Margaret">
+        <label for="s-resident">Resident First Name</label>
+        <input type="text" id="s-resident" placeholder="e.g. Margaret" maxlength="80">
+        <div class="field-error" id="s-resident-error" role="alert"></div>
       </div>
       <div class="field">
-        <label>POA / Family Contact Name</label>
-        <input type="text" id="s-poa" placeholder="e.g. Robert">
+        <label for="s-poa">POA / Family Contact Name</label>
+        <input type="text" id="s-poa" placeholder="e.g. Robert" maxlength="80">
+        <div class="field-error" id="s-poa-error" role="alert"></div>
       </div>
     </div>
   </div>
 
-  <div class="card">
+  <div class="card" id="disciplinesCard">
     <div class="card-title">Disciplines Ordered</div>
     <div class="disc-chip-group" id="s-disc-chips">
       <button type="button" class="disc-chip" id="s-pt-chip" onclick="toggleSDisc('pt')" aria-label="Toggle physical therapy for this email">PT</button>
       <button type="button" class="disc-chip" id="s-ot-chip" onclick="toggleSDisc('ot')" aria-label="Toggle occupational therapy for this email">OT</button>
       <button type="button" class="disc-chip" id="s-st-chip" onclick="toggleSDisc('st')" aria-label="Toggle speech therapy for this email">ST</button>
     </div>
-    <div id="stFocusField" style="display:none;margin-top:14px;">
-      <label style="margin-bottom:6px;display:block;">Speech Therapy Focus</label>
-      <div class="disc-row">
-        <label class="disc-check"><input type="radio" name="stFocus" value="swallow" style="accent-color:var(--blue);width:16px;height:16px;cursor:pointer;"><span>Swallow</span></label>
-        <label class="disc-check"><input type="radio" name="stFocus" value="cognition" style="accent-color:var(--blue);width:16px;height:16px;cursor:pointer;"><span>Cognition</span></label>
-      </div>
-    </div>
+    <div class="field-error" id="s-disc-error" role="alert" style="margin-top:10px;"></div>
   </div>
 
   <div class="card" id="reasonCard">
     <div class="card-title">Reason for Referral</div>
     <div class="field">
-      <select id="s-reason" onchange="toggleCustomReason()" style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Mulish',sans-serif;font-size:.88rem;padding:10px 12px;width:100%;cursor:pointer;">
+      <select id="s-reason" class="select-input" onchange="toggleCustomReason()">
         <option value="" disabled selected>Select a reason</option>
         <option value="post_fall">Post fall</option>
         <option value="decline">Increased assistance with transfers</option>
         <option value="post_hosp">Post hospitalization</option>
         <option value="other">Other (custom)</option>
       </select>
+      <div class="field-error" id="s-reason-error" role="alert"></div>
     </div>
-    <div class="field" id="customReasonField" style="display:none;margin-top:12px;">
-      <label>Custom Reason</label>
-      <input type="text" id="s-custom-reason" placeholder="e.g. Recent weight loss and deconditioning">
+    <div id="customReasonField" style="display:none;margin-top:12px;">
+      <div class="field">
+        <label for="s-connector">How It Reads</label>
+        <select id="s-connector" class="select-input">
+          <option value="due">…referred for PT due to [reason]</option>
+          <option value="following">…referred for PT following [reason]</option>
+          <option value="sentence">…referred for PT. [Reason as its own sentence]</option>
+        </select>
+      </div>
+      <div class="field" style="margin-top:12px;">
+        <label for="s-custom-reason">Custom Reason</label>
+        <input type="text" id="s-custom-reason" placeholder="e.g. recent weight loss and deconditioning" maxlength="200">
+        <div class="field-error" id="s-custom-reason-error" role="alert"></div>
+      </div>
     </div>
   </div>
 
@@ -228,368 +236,15 @@ textarea{resize:vertical;min-height:70px;}
   <button type="button" class="btn-clear" onclick="clearTab('start')">Clear All</button>
 
   <div class="output-card" id="s-output">
+    <div class="stale-banner" id="s-stale" role="status">Details changed since this email was generated. Generate again before copying.</div>
     <div class="output-header">
       <span class="output-title">Generated Email</span>
-      <span class="tag">Ready to Send</span>
+      <span class="tag" id="s-tag">Ready to Send</span>
     </div>
     <div class="subject-label">Subject Line</div>
     <div class="subject-value" id="s-subject"></div>
     <div class="email-body" id="s-body"></div>
     <button type="button" class="btn-copy" id="s-copy" onclick="copyEmail('s')" aria-label="Copy full email to clipboard">Copy Full Email</button>
-  </div>
-</div>
-
-<!-- ========== POST-EVAL PANEL ========== -->
-<div class="panel" id="panel-eval">
-  <div class="card">
-    <div class="card-title">Resident &amp; Contact</div>
-    <div class="fields">
-      <div class="field">
-        <label>Resident First Name</label>
-        <input type="text" id="e-resident" placeholder="e.g. Margaret">
-      </div>
-      <div class="field">
-        <label>POA / Family Contact Name</label>
-        <input type="text" id="e-poa" placeholder="e.g. Robert">
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Disciplines Evaluated</div>
-    <div class="disc-chip-group" id="e-disc-chips">
-      <button type="button" class="disc-chip" id="e-pt-chip" onclick="toggleEDisc('pt')" aria-label="Toggle physical therapy for this email">PT</button>
-      <button type="button" class="disc-chip" id="e-ot-chip" onclick="toggleEDisc('ot')" aria-label="Toggle occupational therapy for this email">OT</button>
-      <button type="button" class="disc-chip" id="e-st-chip" onclick="toggleEDisc('st')" aria-label="Toggle speech therapy for this email">ST</button>
-    </div>
-  </div>
-
-  <div class="card" id="eval-pt-card" style="display:none;">
-    <div class="card-title">PT Goals</div>
-    <div class="goal-chip-group">
-      <button type="button" class="goal-chip e-pt-goal" data-value="Improve transfer safety" onclick="toggleGoalChip(this)">Transfer Safety</button>
-      <button type="button" class="goal-chip e-pt-goal" data-value="Increase ambulation distance" onclick="toggleGoalChip(this)">Ambulation Distance</button>
-      <button type="button" class="goal-chip e-pt-goal" data-value="Improve balance" onclick="toggleGoalChip(this)">Balance</button>
-      <button type="button" class="goal-chip e-pt-goal" data-value="Reduce fall risk" onclick="toggleGoalChip(this)">Fall Risk</button>
-      <button type="button" class="goal-chip e-pt-goal" data-value="Improve bed mobility" onclick="toggleGoalChip(this)">Bed Mobility</button>
-      <button type="button" class="goal-chip e-pt-goal" data-value="Improve endurance" onclick="toggleGoalChip(this)">Endurance</button>
-      <button type="button" class="goal-chip e-pt-goal" data-value="Improve strength" onclick="toggleGoalChip(this)">Strength</button>
-      <button type="button" class="goal-chip e-pt-goal" data-value="Improve standing tolerance" onclick="toggleGoalChip(this)">Standing Tolerance</button>
-      <button type="button" class="goal-chip e-pt-goal" data-value="Improve gait pattern and safety" onclick="toggleGoalChip(this)">Gait Training</button>
-      <button type="button" class="goal-chip e-pt-goal" data-value="Improve range of motion" onclick="toggleGoalChip(this)">Range of Motion</button>
-      <button type="button" class="goal-chip e-pt-goal" data-value="Improve stair negotiation" onclick="toggleGoalChip(this)">Stair Negotiation</button>
-      <button type="button" class="goal-chip e-pt-goal" data-value="Improve wheelchair mobility" onclick="toggleGoalChip(this)">Wheelchair Mobility</button>
-      <button type="button" class="goal-chip e-pt-goal" data-value="Improve safe use of assistive device" onclick="toggleGoalChip(this)">Assistive Device Training</button>
-      <button type="button" class="goal-chip e-pt-goal" data-value="Reduce pain with functional mobility" onclick="toggleGoalChip(this)">Pain with Mobility</button>
-      <button type="button" class="goal-chip e-pt-goal" data-value="Improve home exercise program adherence" onclick="toggleGoalChip(this)">Home Exercise Program</button>
-    </div>
-    <div class="field" style="margin-top:12px;">
-      <label>Additional PT Goals</label>
-      <input type="text" id="e-pt-custom" placeholder="e.g. Improve bed mobility">
-    </div>
-    <div class="fields" style="margin-top:12px;">
-      <div class="field">
-        <label>Sessions / Week</label>
-        <input type="text" id="e-pt-freq" placeholder="e.g. 3" style="max-width:100px;">
-      </div>
-      <div class="field">
-        <label>Weeks</label>
-        <input type="text" id="e-pt-weeks" placeholder="e.g. 4" style="max-width:100px;">
-      </div>
-    </div>
-  </div>
-
-  <div class="card" id="eval-ot-card" style="display:none;">
-    <div class="card-title">OT Goals</div>
-    <div class="goal-chip-group">
-      <button type="button" class="goal-chip e-ot-goal" data-value="Improve dressing independence" onclick="toggleGoalChip(this)">Dressing Independence</button>
-      <button type="button" class="goal-chip e-ot-goal" data-value="Improve bathing safety" onclick="toggleGoalChip(this)">Bathing Safety</button>
-      <button type="button" class="goal-chip e-ot-goal" data-value="Improve grooming independence" onclick="toggleGoalChip(this)">Grooming Independence</button>
-      <button type="button" class="goal-chip e-ot-goal" data-value="Improve self feeding" onclick="toggleGoalChip(this)">Self Feeding</button>
-      <button type="button" class="goal-chip e-ot-goal" data-value="Improve toilet transfer safety" onclick="toggleGoalChip(this)">Toilet Transfer Safety</button>
-      <button type="button" class="goal-chip e-ot-goal" data-value="Improve upper extremity strength" onclick="toggleGoalChip(this)">UE Strength</button>
-      <button type="button" class="goal-chip e-ot-goal" data-value="Improve home safety awareness" onclick="toggleGoalChip(this)">Home Safety Awareness</button>
-      <button type="button" class="goal-chip e-ot-goal" data-value="Improve medication management" onclick="toggleGoalChip(this)">Medication Management</button>
-    </div>
-    <div class="field" style="margin-top:12px;">
-      <label>Additional OT Goals</label>
-      <input type="text" id="e-ot-custom" placeholder="e.g. Improve toilet transfer safety">
-    </div>
-    <div class="fields" style="margin-top:12px;">
-      <div class="field">
-        <label>Sessions / Week</label>
-        <input type="text" id="e-ot-freq" placeholder="e.g. 2" style="max-width:100px;">
-      </div>
-      <div class="field">
-        <label>Weeks</label>
-        <input type="text" id="e-ot-weeks" placeholder="e.g. 6" style="max-width:100px;">
-      </div>
-    </div>
-  </div>
-
-  <div class="card" id="eval-st-card" style="display:none;">
-    <div class="card-title">ST Focus</div>
-    <div class="disc-row" style="margin-bottom:14px;">
-      <label class="disc-check"><input type="radio" name="e-st-focus" value="swallow" onchange="toggleStGoals()" style="accent-color:var(--blue);width:16px;height:16px;cursor:pointer;"><span>Swallow</span></label>
-      <label class="disc-check"><input type="radio" name="e-st-focus" value="cognition" onchange="toggleStGoals()" style="accent-color:var(--blue);width:16px;height:16px;cursor:pointer;"><span>Cognition</span></label>
-    </div>
-    <div id="eval-st-swallow" style="display:none;">
-      <div class="goal-chip-group">
-        <button type="button" class="goal-chip e-st-goal" data-value="Improve swallow safety" onclick="toggleGoalChip(this)">Swallow Safety</button>
-        <button type="button" class="goal-chip e-st-goal" data-value="Reduce aspiration risk" onclick="toggleGoalChip(this)">Aspiration Risk</button>
-        <button type="button" class="goal-chip e-st-goal" data-value="Improve diet tolerance" onclick="toggleGoalChip(this)">Diet Tolerance</button>
-        <button type="button" class="goal-chip e-st-goal" data-value="Improve oral intake" onclick="toggleGoalChip(this)">Oral Intake</button>
-      </div>
-    </div>
-    <div id="eval-st-cognition" style="display:none;">
-      <div class="goal-chip-group">
-        <button type="button" class="goal-chip e-st-goal" data-value="Improve memory" onclick="toggleGoalChip(this)">Memory</button>
-        <button type="button" class="goal-chip e-st-goal" data-value="Improve attention and focus" onclick="toggleGoalChip(this)">Attention &amp; Focus</button>
-        <button type="button" class="goal-chip e-st-goal" data-value="Improve problem solving" onclick="toggleGoalChip(this)">Problem Solving</button>
-        <button type="button" class="goal-chip e-st-goal" data-value="Improve safety awareness" onclick="toggleGoalChip(this)">Safety Awareness</button>
-      </div>
-    </div>
-    <div class="field" style="margin-top:12px;">
-      <label>Additional ST Goals</label>
-      <input type="text" id="e-st-custom" placeholder="e.g. Improve vocal quality">
-    </div>
-    <div class="fields" style="margin-top:12px;">
-      <div class="field">
-        <label>Sessions / Week</label>
-        <input type="text" id="e-st-freq" placeholder="e.g. 2" style="max-width:100px;">
-      </div>
-      <div class="field">
-        <label>Weeks</label>
-        <input type="text" id="e-st-weeks" placeholder="e.g. 4" style="max-width:100px;">
-      </div>
-    </div>
-  </div>
-
-  <button type="button" class="btn-generate" onclick="generateEval()" aria-label="Generate post-eval email">Generate Email</button>
-  <button type="button" class="btn-clear" onclick="clearTab('eval')">Clear All</button>
-
-  <div class="output-card" id="e-output">
-    <div class="output-header">
-      <span class="output-title">Generated Email</span>
-      <span class="tag">Ready to Send</span>
-    </div>
-    <div class="subject-label">Subject Line</div>
-    <div class="subject-value" id="e-subject"></div>
-    <div class="email-body" id="e-body"></div>
-    <button type="button" class="btn-copy" id="e-copy" onclick="copyEmail('e')" aria-label="Copy full email to clipboard">Copy Full Email</button>
-  </div>
-</div>
-
-<!-- ========== THERAPY UPDATE PANEL ========== -->
-<div class="panel" id="panel-update">
-  <div class="card">
-    <div class="card-title">Resident &amp; Contact</div>
-    <div class="fields">
-      <div class="field">
-        <label>Resident First Name</label>
-        <input type="text" id="u-resident" placeholder="e.g. Margaret">
-      </div>
-      <div class="field">
-        <label>POA / Family Contact Name</label>
-        <input type="text" id="u-poa" placeholder="e.g. Robert">
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Disciplines</div>
-    <div class="disc-row">
-      <div class="disc-chip-group" id="u-disc-chips">
-        <button type="button" class="disc-chip" id="u-pt-chip" onclick="toggleUDisc('pt')" aria-label="Toggle physical therapy for this email">PT</button>
-        <button type="button" class="disc-chip" id="u-ot-chip" onclick="toggleUDisc('ot')" aria-label="Toggle occupational therapy for this email">OT</button>
-        <button type="button" class="disc-chip" id="u-st-chip" onclick="toggleUDisc('st')" aria-label="Toggle speech therapy for this email">ST</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">How is the resident doing?</div>
-    <div class="reason-group" id="statusGroup">
-      <label class="reason-option" onclick="selectStatus(this,'good')">
-        <input type="radio" name="u-status">
-        <div class="radio-dot"></div>
-        <div><div class="reason-label">Doing well and making progress</div></div>
-      </label>
-      <label class="reason-option" onclick="selectStatus(this,'slow')">
-        <input type="radio" name="u-status">
-        <div class="radio-dot"></div>
-        <div><div class="reason-label">Doing well but progress is slow</div></div>
-      </label>
-      <label class="reason-option" onclick="selectStatus(this,'moretime')">
-        <input type="radio" name="u-status">
-        <div class="radio-dot"></div>
-        <div><div class="reason-label">Needs more time to meet goals</div></div>
-      </label>
-      <label class="reason-option" onclick="selectStatus(this,'difficulty')">
-        <input type="radio" name="u-status">
-        <div class="radio-dot"></div>
-        <div><div class="reason-label">Having difficulty with therapy</div></div>
-      </label>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Additional Comments (Optional)</div>
-    <div class="field">
-      <textarea id="u-comments" placeholder="e.g. Margaret has been more engaged this past week and is showing improvement with her transfers"></textarea>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Frequency Change</div>
-    <div class="reason-group" id="freqChangeGroup">
-      <label class="reason-option" onclick="selectFreqChange(this,'increase')">
-        <input type="radio" name="u-freqchange">
-        <div class="radio-dot"></div>
-        <div><div class="reason-label">Increasing frequency</div></div>
-      </label>
-      <label class="reason-option" onclick="selectFreqChange(this,'decrease')">
-        <input type="radio" name="u-freqchange">
-        <div class="radio-dot"></div>
-        <div><div class="reason-label">Decreasing frequency</div></div>
-      </label>
-      <label class="reason-option" onclick="selectFreqChange(this,'nochange')">
-        <input type="radio" name="u-freqchange">
-        <div class="radio-dot"></div>
-        <div><div class="reason-label">No change to frequency</div></div>
-      </label>
-    </div>
-  </div>
-
-  <div class="card" id="update-pt-freq" style="display:none;">
-    <div class="card-title">PT Frequency</div>
-    <div class="fields">
-      <div class="field">
-        <label>Sessions / Week</label>
-        <input type="text" id="u-pt-freq" placeholder="e.g. 3" style="max-width:100px;">
-      </div>
-      <div class="field">
-        <label>Weeks</label>
-        <input type="text" id="u-pt-weeks" placeholder="e.g. 4" style="max-width:100px;">
-      </div>
-    </div>
-  </div>
-
-  <div class="card" id="update-ot-freq" style="display:none;">
-    <div class="card-title">OT Frequency</div>
-    <div class="fields">
-      <div class="field">
-        <label>Sessions / Week</label>
-        <input type="text" id="u-ot-freq" placeholder="e.g. 2" style="max-width:100px;">
-      </div>
-      <div class="field">
-        <label>Weeks</label>
-        <input type="text" id="u-ot-weeks" placeholder="e.g. 6" style="max-width:100px;">
-      </div>
-    </div>
-  </div>
-
-  <div class="card" id="update-st-freq" style="display:none;">
-    <div class="card-title">ST Frequency</div>
-    <div class="fields">
-      <div class="field">
-        <label>Sessions / Week</label>
-        <input type="text" id="u-st-freq" placeholder="e.g. 2" style="max-width:100px;">
-      </div>
-      <div class="field">
-        <label>Weeks</label>
-        <input type="text" id="u-st-weeks" placeholder="e.g. 4" style="max-width:100px;">
-      </div>
-    </div>
-  </div>
-
-  <button type="button" class="btn-generate" onclick="generateUpdate()" aria-label="Generate therapy update email">Generate Email</button>
-  <button type="button" class="btn-clear" onclick="clearTab('update')">Clear All</button>
-
-  <div class="output-card" id="u-output">
-    <div class="output-header">
-      <span class="output-title">Generated Email</span>
-      <span class="tag">Ready to Send</span>
-    </div>
-    <div class="subject-label">Subject Line</div>
-    <div class="subject-value" id="u-subject"></div>
-    <div class="email-body" id="u-body"></div>
-    <button type="button" class="btn-copy" id="u-copy" onclick="copyEmail('u')" aria-label="Copy full email to clipboard">Copy Full Email</button>
-  </div>
-</div>
-
-<!-- ========== THERAPY TRANSITION PANEL ========== -->
-<div class="panel" id="panel-transition">
-  <div class="card">
-    <div class="card-title">Resident &amp; Contact</div>
-    <div class="fields">
-      <div class="field">
-        <label>Resident First Name</label>
-        <input type="text" id="t-resident" placeholder="e.g. Margaret">
-      </div>
-      <div class="field">
-        <label>POA / Family Contact Name</label>
-        <input type="text" id="t-poa" placeholder="e.g. Robert">
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Reason for Transition</div>
-    <div class="reason-group">
-      <label class="reason-option" id="ro-goals" onclick="selectReason(this,'goals')">
-        <input type="radio" name="reason">
-        <div class="radio-dot"></div>
-        <div>
-          <div class="reason-label">Goals Successfully Reached</div>
-          <div class="reason-sublabel">Resident has achieved the outcomes established at the start of care.</div>
-        </div>
-      </label>
-      <label class="reason-option" id="ro-visits" onclick="selectReason(this,'visits')">
-        <input type="radio" name="reason">
-        <div class="radio-dot"></div>
-        <div>
-          <div class="reason-label">Preserving Remaining Visits</div>
-          <div class="reason-sublabel">Therapy will conclude while visits remain, held in reserve for future need.</div>
-        </div>
-      </label>
-      <label class="reason-option" id="ro-plateau" onclick="selectReason(this,'plateau')">
-        <input type="radio" name="reason">
-        <div class="radio-dot"></div>
-        <div>
-          <div class="reason-label">Transitioning to a Maintenance Phase</div>
-          <div class="reason-sublabel">Resident has stabilized and is ready to shift focus to maintaining gains.</div>
-        </div>
-      </label>
-      <label class="reason-option" id="ro-hh" onclick="selectReason(this,'hh')">
-        <input type="radio" name="reason">
-        <div class="radio-dot"></div>
-        <div>
-          <div class="reason-label">Transitioning to Home Health</div>
-          <div class="reason-sublabel">Resident will be continuing therapy services through a home health partner.</div>
-        </div>
-      </label>
-    </div>
-    <div class="visits-field" id="visitsField">
-      <div class="field" style="max-width:220px;">
-        <label>Visits Remaining</label>
-        <input type="text" id="visitsRemaining" placeholder="e.g. 6">
-      </div>
-    </div>
-  </div>
-
-  <button type="button" class="btn-generate" onclick="generateTransition()" aria-label="Generate therapy transition email">Generate Email</button>
-  <button type="button" class="btn-clear" onclick="clearTab('transition')">Clear All</button>
-
-  <div class="output-card" id="t-output">
-    <div class="output-header">
-      <span class="output-title">Generated Email</span>
-      <span class="tag">Ready to Send</span>
-    </div>
-    <div class="subject-label">Subject Line</div>
-    <div class="subject-value" id="t-subject"></div>
-    <div class="email-body" id="t-body"></div>
-    <button type="button" class="btn-copy" id="t-copy" onclick="copyEmail('t')" aria-label="Copy full email to clipboard">Copy Full Email</button>
   </div>
 </div>
 
@@ -599,12 +254,14 @@ textarea{resize:vertical;min-height:70px;}
     <div class="card-title">Resident &amp; Contact</div>
     <div class="fields">
       <div class="field">
-        <label>Resident First Name</label>
-        <input type="text" id="f-resident" placeholder="e.g. Margaret">
+        <label for="f-resident">Resident First Name</label>
+        <input type="text" id="f-resident" placeholder="e.g. Margaret" maxlength="80">
+        <div class="field-error" id="f-resident-error" role="alert"></div>
       </div>
       <div class="field">
-        <label>POA / Family Contact Name</label>
-        <input type="text" id="f-poa" placeholder="e.g. Robert">
+        <label for="f-poa">POA / Family Contact Name</label>
+        <input type="text" id="f-poa" placeholder="e.g. Robert" maxlength="80">
+        <div class="field-error" id="f-poa-error" role="alert"></div>
       </div>
     </div>
   </div>
@@ -612,7 +269,8 @@ textarea{resize:vertical;min-height:70px;}
   <div class="card">
     <div class="card-title">Intervention</div>
     <div class="field">
-      <input type="text" id="f-intervention" placeholder="e.g. bed cane and fall mat">
+      <input type="text" id="f-intervention" placeholder="e.g. bed cane and fall mat" maxlength="200">
+      <div class="field-error" id="f-intervention-error" role="alert"></div>
     </div>
   </div>
 
@@ -625,15 +283,18 @@ textarea{resize:vertical;min-height:70px;}
       </div>
     </div>
     <button type="button" class="add-link-btn" onclick="addLink()" aria-label="Add purchase link row">+ Add Link</button>
+    <div class="field-error" id="f-links-error" role="alert" style="margin-top:10px;"></div>
+    <p class="card-note">Links are checked for format only, not for clinical suitability or price.</p>
   </div>
 
   <button type="button" class="btn-generate" onclick="generateFall()" aria-label="Generate fall follow-up email">Generate Email</button>
   <button type="button" class="btn-clear" onclick="clearTab('fall')">Clear All</button>
 
   <div class="output-card" id="f-output">
+    <div class="stale-banner" id="f-stale" role="status">Details changed since this email was generated. Generate again before copying.</div>
     <div class="output-header">
       <span class="output-title">Generated Email</span>
-      <span class="tag">Ready to Send</span>
+      <span class="tag" id="f-tag">Ready to Send</span>
     </div>
     <div class="subject-label">Subject Line</div>
     <div class="subject-value" id="f-subject"></div>
@@ -642,164 +303,161 @@ textarea{resize:vertical;min-height:70px;}
   </div>
 </div>
 
-<!-- ========== QUICK REFERENCE PANEL ========== -->
-<div class="panel" id="panel-ref">
-
-  <div class="card">
-    <div class="ref-section">
-      <div class="ref-title">Health and Wellness Talking Points</div>
-      <div class="ref-bullet" id="hw-points">
-&#8226; Our Health and Wellness Program is available to all residents and is a great way to maintain the progress made during skilled therapy.<br><br>
-&#8226; Sessions are $55 for 30 minutes, with no minimum or maximum commitment.<br><br>
-&#8226; Most residents participate twice per week, though the schedule is completely flexible.<br><br>
-&#8226; The program is designed to support continued strength, balance, and mobility in a consistent, supportive setting.<br><br>
-&#8226; Health and Wellness is a private pay service and does not go through insurance, so there are no visit limits or authorization requirements.<br><br>
-&#8226; Residents can start or stop at any time. There is no contract or obligation.
-      </div>
-      <button type="button" class="ref-copy-btn" onclick="copyRef('hw-points', this)" aria-label="Copy health and wellness reference text">Copy</button>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="ref-section">
-      <div class="ref-title">Insurance Visit Preservation Language</div>
-      <div class="ref-bullet" id="ins-points">
-<strong>When explaining to a family why therapy is ending before all visits are used:</strong><br><br>
-&#8226; "We are intentionally wrapping up skilled services at this time in order to preserve the remaining visits. Should a change in condition or a new need arise later in the year, those visits will be available and ready to use."<br><br>
-&#8226; "Insurance authorizes a set number of visits per calendar year. Rather than using all of them now, we are holding the remaining visits in reserve so they are there if needed down the road."<br><br>
-&#8226; "This is something we do to advocate for our residents. Protecting those visits means your loved one has a safety net if something comes up later."<br><br>
-<strong>When a family pushes back on ending therapy:</strong><br><br>
-&#8226; "I understand the concern. The good news is that we are not taking anything away. Those visits remain available, and if there is ever a new skilled need, we can get therapy started again quickly."<br><br>
-&#8226; "Our Health and Wellness Program is a great option for continuing to work on strength and mobility in the meantime, without using any insurance visits."
-      </div>
-      <button type="button" class="ref-copy-btn" onclick="copyRef('ins-points', this)" aria-label="Copy insurance reference text">Copy</button>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="ref-section">
-      <div class="ref-title">Common Family Questions</div>
-
-      <div class="ref-item">
-        <div class="ref-q">Why is therapy only twice a week?</div>
-        <div class="ref-a">"The frequency is based on what our clinical team has determined to be the most appropriate dosage for your loved one's current needs. We want to make sure each session is productive and that there is adequate time for rest and recovery between visits."</div>
-      </div>
-
-      <div class="ref-item">
-        <div class="ref-q">Why is my loved one being discharged from therapy?</div>
-        <div class="ref-a">"Skilled therapy requires that we demonstrate measurable functional improvement. When a resident has met their goals, reached a stable level, or when continuing to bill insurance is no longer clinically appropriate, we transition them out of skilled services. This protects their remaining visits for future use."</div>
-      </div>
-
-      <div class="ref-item">
-        <div class="ref-q">What is the difference between skilled therapy and Health and Wellness?</div>
-        <div class="ref-a">"Skilled therapy is covered by insurance and requires a medical need with measurable goals. Health and Wellness is a private pay program that allows residents to continue working on strength, balance, and mobility without the restrictions of insurance. It is $55 for a 30 minute session with no visit limits."</div>
-      </div>
-
-      <div class="ref-item">
-        <div class="ref-q">Can my loved one get more therapy visits?</div>
-        <div class="ref-a">"The number of visits is determined by the insurance authorization. If there is a change in condition or a new skilled need, we can evaluate for additional services. In the meantime, our Health and Wellness Program is available for ongoing support without using insurance visits."</div>
-      </div>
-
-      <div class="ref-item">
-        <div class="ref-q">Why are you not using all of the authorized visits?</div>
-        <div class="ref-a">"We are preserving the remaining visits so they are available later in the year if your loved one experiences a change in condition or a new need arises. This is something we do to protect their benefits."</div>
-      </div>
-
-      <div class="ref-item">
-        <div class="ref-q">What happens after therapy ends?</div>
-        <div class="ref-a">"Before wrapping up, your loved one will receive a Home Exercise Program to continue working on their goals independently. We also offer a Health and Wellness Program for residents who want continued support from our therapy team. Sessions are $55 for 30 minutes with no minimum or maximum commitment."</div>
-      </div>
-    </div>
-  </div>
-
-</div>
-
 <div class="footer">
   <div class="footer-logo">CP</div>
   <span class="footer-text">Built by Cliff Peters</span>
 </div>
 
 </div><!-- /wrap -->
+<div id="toast" role="status" hidden></div>
 
 <script>
+'use strict';
+
+// ── SHORTHAND ──
+function $(id) { return document.getElementById(id); }
+function val(id) { var el = $(id); return el ? el.value.trim() : ''; }
+
+// ── FACILITY / COMPANY / PARTNER ──
+// These are fixed for personal use — no need to re-enter every time.
+var SENDER_INFO = 'Cliff Peters, Director of Rehabilitation';
+var THERAPY_COMPANY = 'Powerback';
+var CONSENT_PARTNER = 'Alinea';
+var DEFAULT_FACILITY = 'The Virginian';
+var PREFS_KEY = 'dorsuite_familyconnect_prefs';
+
+function getFacility() {
+  return val('facilityName') || 'your facility';
+}
+function getTherapyCompany() {
+  return THERAPY_COMPANY;
+}
+function getConsentPartner() {
+  return CONSENT_PARTNER;
+}
+function getIntroSentence() {
+  return 'My name is ' + SENDER_INFO + ' with ' + getTherapyCompany() + ', the rehabilitation team partnering with ' + getFacility() + ' to provide therapy services.';
+}
+
+// ── PREFERENCES ──
+// Only the facility name persists. Resident and family names are deliberately
+// never written to storage — they live in the DOM for the life of the tab.
+function loadPrefs() {
+  try {
+    var saved = JSON.parse(localStorage.getItem(PREFS_KEY) || '{}');
+    if (typeof saved.facility === 'string' && saved.facility) {
+      $('facilityName').value = saved.facility;
+    }
+  } catch (e) {
+    // Storage blocked or corrupt — fall back to the default already in the markup.
+  }
+}
+
+function savePrefs() {
+  try {
+    localStorage.setItem(PREFS_KEY, JSON.stringify({ facility: val('facilityName') }));
+  } catch (e) {
+    // Private browsing or storage disabled. Not worth interrupting the user.
+  }
+}
+
+// ── STALE TRACKING ──
+// Once an email is generated, any change to the inputs makes the displayed
+// email wrong. Rather than silently letting it be copied, flag it and disable
+// the copy button until it is regenerated.
+var generated = { start: false, fall: false };
+var isStale = { start: false, fall: false };
+
+function markStale(tab) {
+  if (!generated[tab]) return;
+  isStale[tab] = true;
+  var prefix = (tab === 'start') ? 's' : 'f';
+  $(prefix + '-stale').classList.add('visible');
+  $(prefix + '-tag').textContent = 'Needs Regenerating';
+  $(prefix + '-tag').classList.add('stale');
+  $(prefix + '-copy').disabled = true;
+}
+
+function clearStale(tab) {
+  isStale[tab] = false;
+  var prefix = (tab === 'start') ? 's' : 'f';
+  $(prefix + '-stale').classList.remove('visible');
+  $(prefix + '-tag').textContent = 'Ready to Send';
+  $(prefix + '-tag').classList.remove('stale');
+  $(prefix + '-copy').disabled = false;
+}
+
+function watchPanel(tab) {
+  var panel = $('panel-' + tab);
+  panel.addEventListener('input', function() { markStale(tab); });
+  panel.addEventListener('change', function() { markStale(tab); });
+}
+
+// ── VALIDATION ──
+function setFieldError(id, message) {
+  var box = $(id + '-error');
+  var input = $(id);
+  if (box) box.textContent = message;
+  if (input) input.setAttribute('aria-invalid', 'true');
+}
+
+function clearErrors(tab) {
+  var panel = $('panel-' + tab);
+  panel.querySelectorAll('.field-error').forEach(function(el) { el.textContent = ''; });
+  panel.querySelectorAll('[aria-invalid]').forEach(function(el) { el.removeAttribute('aria-invalid'); });
+}
+
+function focusFirstError(tab) {
+  var panel = $('panel-' + tab);
+  var target = panel.querySelector('[aria-invalid="true"]');
+  // The discipline chips are buttons, not inputs, so they never carry
+  // aria-invalid. Fall back to the first chip if that is the only error.
+  if (!target && tab === 'start' && $('s-disc-error').textContent) {
+    target = $('s-pt-chip');
+  }
+  if (target) target.focus();
+  toast('Check the highlighted fields.');
+}
+
+// Format check only. A link that parses is not a link that is clinically right.
+function isValidLink(value) {
+  try {
+    var u = new URL(value);
+    if (u.protocol !== 'http:' && u.protocol !== 'https:') return false;
+    if (!u.hostname) return false;
+    if (u.username || u.password) return false;
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+// ── TOAST ──
+var toastTimer;
+function toast(message) {
+  clearTimeout(toastTimer);
+  var el = $('toast');
+  el.textContent = message;
+  el.hidden = false;
+  toastTimer = setTimeout(function() { el.hidden = true; }, 3500);
+}
+
 // ── DISC CHIPS ──
-var sDiscs = {pt:false, ot:false, st:false};
+var sDiscs = { pt: false, ot: false, st: false };
 function toggleSDisc(d) {
   sDiscs[d] = !sDiscs[d];
-  var chip = document.getElementById('s-'+d+'-chip');
-  chip.classList.toggle(d+'-on', sDiscs[d]);
-  // wire ST focus
-  if (d === 'st') {
-    document.getElementById('stFocusField').style.display = sDiscs.st ? 'block' : 'none';
-    if (!sDiscs.st) document.querySelectorAll('input[name="stFocus"]').forEach(function(r){r.checked=false;});
-  }
-}
-
-var eDiscs = {pt:false, ot:false, st:false};
-function toggleEDisc(d) {
-  eDiscs[d] = !eDiscs[d];
-  var chip = document.getElementById('e-'+d+'-chip');
-  chip.classList.toggle(d+'-on', eDiscs[d]);
-  toggleEvalSection(d);
-  if (!eDiscs[d]) {
-    document.querySelectorAll('.e-'+d+'-goal').forEach(function(btn){btn.classList.remove('selected');});
-    var custom = document.getElementById('e-'+d+'-custom');
-    if (custom) custom.value = '';
-    if (d === 'st') {
-      document.querySelectorAll('input[name="e-st-focus"]').forEach(function(r){r.checked=false;});
-      document.getElementById('eval-st-swallow').style.display='none';
-      document.getElementById('eval-st-cognition').style.display='none';
-    }
-  }
-}
-
-var uDiscs = {pt:false, ot:false, st:false};
-function toggleUDisc(d) {
-  uDiscs[d] = !uDiscs[d];
-  var chip = document.getElementById('u-'+d+'-chip');
-  chip.classList.toggle(d+'-on', uDiscs[d]);
-  toggleUpdateDisc(d);
-}
-
-// ── SHIM: redirect old checkbox checks to chip state ──
-function getSDiscChecked(d) { return sDiscs[d]; }
-function getEDiscChecked(d) { return eDiscs[d]; }
-function getUDiscChecked(d) { return uDiscs[d]; }
-
-// ── FACILITY NAME ──
-function getFacility() {
-  return document.getElementById('facilityName').value.trim() || 'your facility';
+  var chip = $('s-' + d + '-chip');
+  chip.classList.toggle(d + '-on', sDiscs[d]);
+  chip.setAttribute('aria-pressed', sDiscs[d] ? 'true' : 'false');
+  markStale('start');
 }
 
 // ── TAB SWITCHING ──
 function switchTab(id) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('tab-' + id).classList.add('active');
-  document.getElementById('panel-' + id).classList.add('active');
-}
-
-// ── REASON SELECT ──
-var selectedReason = null;
-function selectReason(el, val) {
-  document.getElementById('panel-transition').querySelectorAll('.reason-option').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
-  selectedReason = val;
-  document.getElementById('visitsField').classList.toggle('show', val === 'visits');
-}
-
-// ── ST FOCUS TOGGLE ──
-function toggleStFocus() {
-  var stChecked = sDiscs.st;
-  document.getElementById('stFocusField').style.display = stChecked ? 'block' : 'none';
-  if (!stChecked) {
-    document.querySelectorAll('input[name="stFocus"]').forEach(function(r) { r.checked = false; });
-  }
-}
-
-function getStFocus() {
-  var selected = document.querySelector('input[name="stFocus"]:checked');
-  return selected ? selected.value : '';
+  document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('active'); });
+  $('tab-' + id).classList.add('active');
+  $('panel-' + id).classList.add('active');
 }
 
 // ── DISCIPLINE FORMATTER ──
@@ -811,91 +469,98 @@ function getDiscs() {
   if (checked.length === 0) return '';
   if (checked.length === 1) return checked[0];
   if (checked.length === 2) return checked[0] + ' and ' + checked[1];
-  return checked.slice(0,-1).join(', ') + ', and ' + checked[checked.length-1];
-}
-
-// ── DISCIPLINE BLURBS ──
-function getDiscCount() {
-  var count = 0;
-  if (sDiscs.pt) count++;
-  if (sDiscs.ot) count++;
-  if (sDiscs.st) count++;
-  return count;
-}
-
-function getInlineFocus(resident) {
-  if (sDiscs.pt) return ', targeting functional mobility and safety';
-  if (sDiscs.ot) return ', targeting independence with daily activities and self care';
-  if (sDiscs.st) {
-    var focus = getStFocus();
-    if (focus === 'swallow') return ', targeting swallowing safety';
-    if (focus === 'cognition') return ', targeting memory and cognitive function';
-  }
-  return '';
-}
-
-function getDiscBlurbs(resident) {
-  var lines = [];
-  if (sDiscs.pt) lines.push('Our Physical Therapy team will work with ' + resident + ' on functional mobility and safety.');
-  if (sDiscs.ot) lines.push('Occupational Therapy will support independence with daily activities and self care.');
-  if (sDiscs.st) {
-    var focus = getStFocus();
-    if (focus === 'swallow') lines.push('Speech Therapy will address swallowing safety.');
-    if (focus === 'cognition') lines.push('Speech Therapy will address memory and cognitive function.');
-  }
-  return lines.length > 0 ? lines.join(' ') : '';
+  return checked.slice(0, -1).join(', ') + ', and ' + checked[checked.length - 1];
 }
 
 // ── REFERRAL TYPE TOGGLE ──
 var referralType = 'existing';
 function setReferralType(type) {
   referralType = type;
-  document.getElementById('tog-existing').classList.remove('active');
-  document.getElementById('tog-movein').classList.remove('active');
-  document.getElementById('tog-consent').classList.remove('active');
-  document.getElementById('tog-' + type).classList.add('active');
+  ['existing', 'movein', 'consent'].forEach(function(t) {
+    $('tog-' + t).classList.remove('active');
+  });
+  $('tog-' + type).classList.add('active');
 
   var isConsent = (type === 'consent');
-  // Hide disciplines, ST focus, and reason for consent follow-up
-  document.querySelectorAll('#panel-start .card')[2].style.display = isConsent ? 'none' : 'block';
-  document.getElementById('reasonCard').style.display = (type === 'existing') ? 'block' : 'none';
-  document.getElementById('consentCard').style.display = isConsent ? 'block' : 'none';
+  // Hide disciplines and reason for consent follow-up.
+  $('disciplinesCard').style.display = isConsent ? 'none' : 'block';
+  $('reasonCard').style.display = (type === 'existing') ? 'block' : 'none';
+  $('consentCard').style.display = isConsent ? 'block' : 'none';
+  markStale('start');
 }
 
 var consentLevel = 'gentle';
 function setConsentLevel(level) {
   consentLevel = level;
-  document.getElementById('tog-gentle').classList.remove('active');
-  document.getElementById('tog-firm').classList.remove('active');
-  document.getElementById('tog-' + level).classList.add('active');
+  $('tog-gentle').classList.remove('active');
+  $('tog-firm').classList.remove('active');
+  $('tog-' + level).classList.add('active');
+  markStale('start');
 }
 
 // ── CUSTOM REASON TOGGLE ──
 function toggleCustomReason() {
-  var val = document.getElementById('s-reason').value;
-  document.getElementById('customReasonField').style.display = (val === 'other') ? 'flex' : 'none';
+  var v = val('s-reason');
+  $('customReasonField').style.display = (v === 'other') ? 'block' : 'none';
 }
 
 // ── REASON FORMATTER ──
-function getReasonText(resident) {
-  var val = document.getElementById('s-reason').value;
+// Returns a fragment that slots in after "...referred for Physical Therapy".
+// Preset reasons carry their own connector. Custom reasons get one chosen by
+// the user, so a bare noun phrase does not produce "referred for Physical
+// Therapy recent weight loss."
+function getReasonFragment() {
+  var v = val('s-reason');
   var reasonMap = {
-    post_fall: 'following a recent fall',
-    decline: 'due to an increased need for assistance with transfers',
-    post_hosp: 'following a recent hospitalization'
+    post_fall: ' following a recent fall',
+    decline: ' due to an increased need for assistance with transfers',
+    post_hosp: ' following a recent hospitalization'
   };
-  if (val === 'other') {
-    var custom = document.getElementById('s-custom-reason').value.trim();
-    return custom ? custom.toLowerCase() : '';
+
+  if (v !== 'other') return reasonMap[v] || '';
+
+  var custom = val('s-custom-reason');
+  if (!custom) return '';
+
+  // Strip a leading connector the user may have typed and any trailing period,
+  // so the chosen connector is not doubled up.
+  custom = custom.replace(/^(due to|following|after|because of)\s+/i, '').replace(/[.!?]+$/, '');
+
+  var connector = val('s-connector');
+  if (connector === 'sentence') {
+    return '. ' + custom.charAt(0).toUpperCase() + custom.slice(1);
   }
-  return reasonMap[val] || '';
+  return (connector === 'following' ? ' following ' : ' due to ') + custom;
 }
 
 // ── THERAPY START ──
 function generateStart() {
-  var resident = document.getElementById('s-resident').value.trim();
-  var poa = document.getElementById('s-poa').value.trim();
-  if (!resident || !poa) { alert('Please enter the resident name and family contact name.'); return; }
+  clearErrors('start');
+
+  var resident = val('s-resident');
+  var poa = val('s-poa');
+  var ok = true;
+
+  if (!resident) { setFieldError('s-resident', 'Enter the resident first name.'); ok = false; }
+  if (!poa) { setFieldError('s-poa', 'Enter the family contact name.'); ok = false; }
+
+  var discs = '';
+  if (referralType !== 'consent') {
+    discs = getDiscs();
+    if (!discs) { $('s-disc-error').textContent = 'Select at least one discipline.'; ok = false; }
+  }
+
+  if (referralType === 'existing') {
+    if (!val('s-reason')) {
+      setFieldError('s-reason', 'Select a reason for the referral.');
+      ok = false;
+    } else if (val('s-reason') === 'other' && !val('s-custom-reason')) {
+      setFieldError('s-custom-reason', 'Enter a custom reason.');
+      ok = false;
+    }
+  }
+
+  if (!ok) { focusFirstError('start'); return; }
 
   var subject, body;
 
@@ -903,460 +568,82 @@ function generateStart() {
     subject = resident + ' \u2013 Consent Forms Needed';
     if (consentLevel === 'gentle') {
       body = 'Hello ' + poa + ',\n\n' +
-        'I am reaching out to follow up on the consent forms needed for ' + resident + '\'s therapy services. We are looking forward to getting started, but we are unable to schedule the initial evaluation until the forms have been completed.\n\n' +
-        'You should have received an email from our partner, Alinea, with a secure link to the patient portal where the forms can be reviewed and signed electronically. If you did not receive the email or are having trouble accessing the portal, please let us know and we will be happy to assist.\n\n' +
-        'If you would prefer to complete the forms in person, we can arrange that as well.\n\n' +
+        'I wanted to follow up on the consent forms for ' + resident + '\'s therapy services. We\'re looking forward to getting started, but we\'re not able to schedule the initial evaluation until the forms are complete.\n\n' +
+        'You should have received an email from our partner, ' + getConsentPartner() + ', with a secure link to the patient portal where the forms can be reviewed and signed electronically. If that email didn\'t come through, or you\'re having trouble with the portal, just let us know and we\'ll help you sort it out.\n\n' +
+        'We\'re also happy to complete the forms in person if that\'s easier.\n\n' +
         'Please feel free to reach out with any questions.\n\n' +
         'Thank you,';
     } else {
       body = 'Hello ' + poa + ',\n\n' +
-        'I am reaching out again regarding the consent forms needed for ' + resident + '\'s therapy services. At this time, we have not yet received the completed forms and are unable to begin therapy until they are in place.\n\n' +
-        'We want to make sure ' + resident + ' is able to start services as soon as possible. If you are able to complete the forms through the Alinea patient portal at your earliest convenience, that would allow us to get ' + resident + ' on the schedule right away.\n\n' +
-        'If you are having difficulty with the portal or would prefer to complete the forms in person, please let us know and we will make arrangements.\n\n' +
+        'I wanted to check back in about the consent forms for ' + resident + '\'s therapy services. We still haven\'t received the completed forms, and we\'re not able to begin therapy until they\'re in place.\n\n' +
+        'We\'d like to get ' + resident + ' started as soon as possible. If you\'re able to complete the forms through the ' + getConsentPartner() + ' patient portal soon, we can get ' + resident + ' on the schedule right away.\n\n' +
+        'If you\'re running into trouble with the portal, or would prefer to complete the forms in person, just let us know and we\'ll make it work.\n\n' +
         'Please feel free to reach out with any questions.\n\n' +
         'Thank you,';
     }
-
-    document.getElementById('s-subject').textContent = subject;
-    document.getElementById('s-body').textContent = body;
-    showOutput('s');
-    return;
-  }
-
-  var discs = getDiscs();
-  if (!discs) { alert('Please select at least one discipline.'); return; }
-  if (sDiscs.st && !getStFocus()) { alert('Please select a Speech Therapy focus (Swallow or Cognition).'); return; }
-
-  if (referralType === 'movein') {
+  } else if (referralType === 'movein') {
     subject = resident + ' \u2013 Starting Therapy at ' + getFacility();
-    var count = getDiscCount();
-    if (count === 1) {
-      var inline = getInlineFocus(resident);
-      body = 'Hello ' + poa + ',\n\n' +
-        'On behalf of the Powerback rehabilitation team, I would like to welcome ' + resident + ' to ' + getFacility() + '. ' + resident + ' has arrived with orders for ' + discs + inline + ', and our team is looking forward to getting started.\n\n' +
-        'Before we are able to schedule the initial evaluation and subsequent therapy sessions, we will need to collect a few consent forms. You will be receiving a separate email shortly from our trusted partner, Alinea, with a secure link to the patient portal where you can review and sign the necessary forms electronically.\n\n' +
-        'If you have any questions, or if you would prefer to complete the forms in person, please feel free to reach out.\n\n' +
-        
-        'Thank you,';
-    } else {
-      var blurbs = getDiscBlurbs(resident);
-      body = 'Hello ' + poa + ',\n\n' +
-        'On behalf of the Powerback rehabilitation team, I would like to welcome ' + resident + ' to ' + getFacility() + '. ' + resident + ' has arrived with orders for ' + discs + ', and our team is looking forward to getting started.\n\n' +
-        blurbs + '\n\n' +
-        'Before we are able to schedule the initial evaluation and subsequent therapy sessions, we will need to collect a few consent forms. You will be receiving a separate email shortly from our trusted partner, Alinea, with a secure link to the patient portal where you can review and sign the necessary forms electronically.\n\n' +
-        'If you have any questions, or if you would prefer to complete the forms in person, please feel free to reach out.\n\n' +
-        
-        'Thank you,';
-    }
+    body = 'Hello ' + poa + ',\n\n' +
+      getIntroSentence() + '\n\n' +
+      'I\'d like to personally welcome ' + resident + ' to our community. ' + resident + ' has arrived with orders for ' + discs + ', and our team is looking forward to getting started.\n\n' +
+      'Before we can schedule the initial evaluation, we\'ll need a few consent forms completed. You\'ll receive a separate email shortly from our partner, ' + getConsentPartner() + ', with a secure link to the patient portal where you can review and sign them electronically.\n\n' +
+      'If you have any questions about the therapy orders, what the evaluation will involve, or the consent forms, please feel free to reach out. If you would prefer to complete the forms in person, we can help with that as well.\n\n' +
+      'Thank you,';
   } else {
-    var reasonVal = document.getElementById('s-reason').value;
-    if (!reasonVal) { alert('Please select a reason for the referral.'); return; }
-    if (reasonVal === 'other' && !document.getElementById('s-custom-reason').value.trim()) { alert('Please enter a custom reason.'); return; }
-    var reasonText = getReasonText(resident);
-
     subject = resident + ' \u2013 New Therapy Referral at ' + getFacility();
-    var count = getDiscCount();
-    if (count === 1) {
-      var inline = getInlineFocus(resident);
-      body = 'Hello ' + poa + ',\n\n' +
-        'I am reaching out to let you know that ' + resident + ' has been referred for ' + discs + ' services' + inline + ', ' + reasonText + '.\n\n' +
-        'Before we are able to schedule the initial evaluation and subsequent therapy sessions, we will need to collect a few consent forms. You will be receiving a separate email shortly from our trusted partner, Alinea, with a secure link to the patient portal where you can review and sign the necessary forms electronically.\n\n' +
-        'If you have any questions, or if you would prefer to complete the forms in person, please feel free to reach out.\n\n' +
-        
-        'Thank you,';
-    } else {
-      var blurbs = getDiscBlurbs(resident);
-      body = 'Hello ' + poa + ',\n\n' +
-        'I am reaching out to let you know that ' + resident + ' has been referred for ' + discs + ' services ' + reasonText + '.\n\n' +
-        blurbs + '\n\n' +
-        'Before we are able to schedule the initial evaluation and subsequent therapy sessions, we will need to collect a few consent forms. You will be receiving a separate email shortly from our trusted partner, Alinea, with a secure link to the patient portal where you can review and sign the necessary forms electronically.\n\n' +
-        'If you have any questions, or if you would prefer to complete the forms in person, please feel free to reach out.\n\n' +
-        
-        'Thank you,';
-    }
+    body = 'Hello ' + poa + ',\n\n' +
+      getIntroSentence() + '\n\n' +
+      'I wanted to let you know that ' + resident + ' has been referred for ' + discs + getReasonFragment() + '.\n\n' +
+      'Before we can schedule the initial evaluation, we\'ll need a few consent forms completed. You\'ll receive a separate email shortly from our partner, ' + getConsentPartner() + ', with a secure link to the patient portal where you can review and sign them electronically.\n\n' +
+      'If you have any questions about the therapy recommendation, what the evaluation will involve, or the consent forms, please feel free to reach out. If you would prefer to complete the forms in person, we can help with that as well.\n\n' +
+      'Thank you,';
   }
 
-  document.getElementById('s-subject').textContent = subject;
-  document.getElementById('s-body').textContent = body;
+  $('s-subject').textContent = subject;
+  $('s-body').textContent = body;
+  generated.start = true;
+  clearStale('start');
   showOutput('s');
-}
-
-// ── POST-EVAL SECTION TOGGLES ──
-function toggleEvalSection(disc) {
-  var checked = eDiscs[disc];
-  document.getElementById('eval-' + disc + '-card').style.display = checked ? 'block' : 'none';
-  if (!checked) {
-    document.querySelectorAll('.e-' + disc + '-goal').forEach(function(btn) { btn.classList.remove('selected'); });
-    var custom = document.getElementById('e-' + disc + '-custom');
-    if (custom) custom.value = '';
-    if (disc === 'st') {
-      document.querySelectorAll('input[name="e-st-focus"]').forEach(function(r) { r.checked = false; });
-      document.getElementById('eval-st-swallow').style.display = 'none';
-      document.getElementById('eval-st-cognition').style.display = 'none';
-    }
-  }
-}
-
-function toggleStGoals() {
-  var selected = document.querySelector('input[name="e-st-focus"]:checked');
-  var val = selected ? selected.value : '';
-  document.getElementById('eval-st-swallow').style.display = (val === 'swallow') ? 'block' : 'none';
-  document.getElementById('eval-st-cognition').style.display = (val === 'cognition') ? 'block' : 'none';
-  document.querySelectorAll('.e-st-goal').forEach(function(btn) { btn.classList.remove('selected'); });
-}
-
-function toggleGoalChip(el) { el.classList.toggle('selected'); }
-
-function getEvalGoals(disc) {
-  var goals = [];
-  document.querySelectorAll('.e-' + disc + '-goal.selected').forEach(function(btn) {
-    var val = btn.dataset.value.toLowerCase();
-    val = val.replace(/^improve /, '').replace(/^reduce /, '').replace(/^increase /, '');
-    goals.push(val);
-  });
-  var custom = document.getElementById('e-' + disc + '-custom').value.trim();
-  if (custom) {
-    custom.split(',').forEach(function(g) {
-      var trimmed = g.trim().toLowerCase();
-      if (trimmed) {
-        trimmed = trimmed.replace(/^improve /, '').replace(/^reduce /, '').replace(/^increase /, '');
-        goals.push(trimmed);
-      }
-    });
-  }
-  return goals;
-}
-
-function formatGoalList(goals) {
-  if (goals.length === 0) return '';
-  if (goals.length === 1) return goals[0];
-  if (goals.length === 2) return goals[0] + ' and ' + goals[1];
-  return goals.slice(0, -1).join(', ') + ', and ' + goals[goals.length - 1];
-}
-
-// ── POST-EVAL EMAIL ──
-function generateEval() {
-  var resident = document.getElementById('e-resident').value.trim();
-  var poa = document.getElementById('e-poa').value.trim();
-  if (!resident || !poa) { alert('Please enter the resident name and family contact name.'); return; }
-
-  var hasPT = eDiscs.pt;
-  var hasOT = eDiscs.ot;
-  var hasST = eDiscs.st;
-  if (!hasPT && !hasOT && !hasST) { alert('Please select at least one discipline.'); return; }
-
-  if (hasST) {
-    var stFocus = document.querySelector('input[name="e-st-focus"]:checked');
-    if (!stFocus) { alert('Please select a Speech Therapy focus (Swallow or Cognition).'); return; }
-  }
-
-  var discNames = [];
-  if (hasPT) discNames.push('Physical Therapy');
-  if (hasOT) discNames.push('Occupational Therapy');
-  if (hasST) discNames.push('Speech Therapy');
-  var discList = discNames.length === 1 ? discNames[0] : discNames.length === 2 ? discNames[0] + ' and ' + discNames[1] : discNames.slice(0,-1).join(', ') + ', and ' + discNames[discNames.length-1];
-  var discCount = discNames.length;
-
-  var subject = resident + ' \u2013 Therapy Evaluation Update';
-  var body = '';
-
-  if (discCount === 1) {
-    // Single discipline: fold goals inline
-    var goals, freq, weeks, goalText, freqText;
-
-    if (hasPT) {
-      goals = getEvalGoals('pt');
-      freq = document.getElementById('e-pt-freq').value.trim();
-      weeks = document.getElementById('e-pt-weeks').value.trim();
-      var hasFallRisk = false;
-      var filtered = [];
-      for (var i = 0; i < goals.length; i++) {
-        if (goals[i] === 'fall risk') { hasFallRisk = true; } else { filtered.push(goals[i]); }
-      }
-      if (filtered.length > 0 && hasFallRisk) {
-        goalText = ', targeting ' + formatGoalList(filtered) + ', and reducing fall risk';
-      } else if (hasFallRisk) {
-        goalText = ', targeting reducing fall risk';
-      } else if (filtered.length > 0) {
-        goalText = ', targeting ' + formatGoalList(filtered);
-      } else { goalText = ''; }
-    } else if (hasOT) {
-      goals = getEvalGoals('ot');
-      freq = document.getElementById('e-ot-freq').value.trim();
-      weeks = document.getElementById('e-ot-weeks').value.trim();
-      goalText = goals.length > 0 ? ', targeting ' + formatGoalList(goals) : '';
-    } else {
-      goals = getEvalGoals('st');
-      freq = document.getElementById('e-st-freq').value.trim();
-      weeks = document.getElementById('e-st-weeks').value.trim();
-      goalText = goals.length > 0 ? ', targeting ' + formatGoalList(goals) : '';
-    }
-
-    freqText = (freq && weeks) ? ' ' + resident + ' will be seen ' + freq + ' times per week for approximately ' + weeks + ' weeks.' : '';
-
-    body = 'Hello ' + poa + ',\n\n' +
-      'I am reaching out to provide an update following ' + resident + '\'s ' + discList + ' evaluation. Our team has completed the initial assessment and established a plan of care' + goalText + '.' + freqText + '\n\n';
-
-  } else {
-    // Multi discipline: separate blurbs, frequency in its own paragraph
-    body = 'Hello ' + poa + ',\n\n' +
-      'I am reaching out to provide an update following ' + resident + '\'s ' + discList + ' evaluation. Our team has completed the initial assessment and established the following goals for ' + resident + '\'s plan of care.\n\n';
-
-    if (hasPT) {
-      var ptGoals = getEvalGoals('pt');
-      if (ptGoals.length > 0) {
-        var hasFallRisk = false;
-        var filtered = [];
-        for (var i = 0; i < ptGoals.length; i++) {
-          if (ptGoals[i] === 'fall risk') { hasFallRisk = true; } else { filtered.push(ptGoals[i]); }
-        }
-        if (filtered.length > 0 && hasFallRisk) {
-          var goalStr = filtered.length === 1 ? filtered[0] : filtered.join(', ');
-          body += 'Physical Therapy will work with ' + resident + ' on improving ' + goalStr + ', and reducing fall risk.\n\n';
-        } else if (hasFallRisk) {
-          body += 'Physical Therapy will work with ' + resident + ' on reducing fall risk.\n\n';
-        } else {
-          body += 'Physical Therapy will work with ' + resident + ' on improving ' + formatGoalList(filtered) + '.\n\n';
-        }
-      }
-    }
-
-    if (hasOT) {
-      var otGoals = getEvalGoals('ot');
-      if (otGoals.length > 0) {
-        body += 'Occupational Therapy will support ' + resident + ' with improving ' + formatGoalList(otGoals) + '.\n\n';
-      }
-    }
-
-    if (hasST) {
-      var stGoals = getEvalGoals('st');
-      if (stGoals.length > 0) {
-        body += 'Speech Therapy will focus on improving ' + formatGoalList(stGoals) + '.\n\n';
-      }
-    }
-
-    // Combined frequency paragraph
-    var freqParts = [];
-    if (hasPT) {
-      var ptFreq = document.getElementById('e-pt-freq').value.trim();
-      var ptWeeks = document.getElementById('e-pt-weeks').value.trim();
-      if (ptFreq && ptWeeks) freqParts.push('Physical Therapy ' + ptFreq + ' times per week for ' + ptWeeks + ' weeks');
-    }
-    if (hasOT) {
-      var otFreq = document.getElementById('e-ot-freq').value.trim();
-      var otWeeks = document.getElementById('e-ot-weeks').value.trim();
-      if (otFreq && otWeeks) freqParts.push('Occupational Therapy ' + otFreq + ' times per week for ' + otWeeks + ' weeks');
-    }
-    if (hasST) {
-      var stFreq = document.getElementById('e-st-freq').value.trim();
-      var stWeeks = document.getElementById('e-st-weeks').value.trim();
-      if (stFreq && stWeeks) freqParts.push('Speech Therapy ' + stFreq + ' times per week for ' + stWeeks + ' weeks');
-    }
-    if (freqParts.length > 0) {
-      var freqList = freqParts.length === 1 ? freqParts[0] : freqParts.length === 2 ? freqParts[0] + ' and ' + freqParts[1] : freqParts.slice(0,-1).join(', ') + ', and ' + freqParts[freqParts.length-1];
-      body += resident + ' will receive ' + freqList + '.\n\n';
-    }
-  }
-
-  body += 'We will keep you updated on ' + resident + '\'s progress as therapy gets underway. Please feel free to reach out with any questions.\n\n' +
-    'Thank you,';
-
-  document.getElementById('e-subject').textContent = subject;
-  document.getElementById('e-body').textContent = body;
-  showOutput('e');
-}
-
-// ── THERAPY UPDATE ──
-var selectedStatus = null;
-function selectStatus(el, val) {
-  document.getElementById('statusGroup').querySelectorAll('.reason-option').forEach(function(o) { o.classList.remove('selected'); });
-  el.classList.add('selected');
-  selectedStatus = val;
-}
-
-var selectedFreqChange = null;
-function selectFreqChange(el, val) {
-  document.getElementById('freqChangeGroup').querySelectorAll('.reason-option').forEach(function(o) { o.classList.remove('selected'); });
-  el.classList.add('selected');
-  selectedFreqChange = val;
-}
-
-function toggleUpdateDisc(disc) {
-  var checked = uDiscs[disc];
-  document.getElementById('update-' + disc + '-freq').style.display = checked ? 'block' : 'none';
-  if (!checked) {
-    document.getElementById('u-' + disc + '-freq').value = '';
-    document.getElementById('u-' + disc + '-weeks').value = '';
-  }
-}
-
-function generateUpdate() {
-  var resident = document.getElementById('u-resident').value.trim();
-  var poa = document.getElementById('u-poa').value.trim();
-  if (!resident || !poa) { alert('Please enter the resident name and family contact name.'); return; }
-
-  var hasPT = uDiscs.pt;
-  var hasOT = uDiscs.ot;
-  var hasST = uDiscs.st;
-  if (!hasPT && !hasOT && !hasST) { alert('Please select at least one discipline.'); return; }
-  if (!selectedStatus) { alert('Please select how the resident is doing.'); return; }
-  if (!selectedFreqChange) { alert('Please select a frequency change option.'); return; }
-
-  var discNames = [];
-  if (hasPT) discNames.push('Physical Therapy');
-  if (hasOT) discNames.push('Occupational Therapy');
-  if (hasST) discNames.push('Speech Therapy');
-  var discList = discNames.length === 1 ? discNames[0] : discNames.length === 2 ? discNames[0] + ' and ' + discNames[1] : discNames.slice(0,-1).join(', ') + ', and ' + discNames[discNames.length-1];
-
-  var comments = document.getElementById('u-comments').value.trim();
-
-  var subject = resident + ' \u2013 Therapy Progress Update';
-  var body = '';
-
-  if (discNames.length === 1) {
-    // Single discipline: fold into opener, adjust status to not repeat discipline
-    var singleStatusText = {
-      good: resident + ' is doing well and making steady gains.',
-      slow: resident + ' is doing well, though progress has been gradual. Our team will continue working with ' + resident + ' toward the established goals.',
-      moretime: resident + ' is continuing to work toward the established goals. Our clinical team has determined that additional time is needed.',
-      difficulty: resident + ' has been experiencing some difficulty. Our team is adjusting the approach as needed to best support ' + resident + '\'s progress.'
-    };
-    body = 'Hello ' + poa + ',\n\n' +
-      'I am reaching out to provide an update on ' + resident + '\'s ' + discList + ' progress.\n\n' +
-      singleStatusText[selectedStatus] + '\n\n';
-  } else {
-    // Multi discipline: keep discipline in status text
-    var statusText = {
-      good: resident + ' is doing well and making progress with ' + discList + '.',
-      slow: resident + ' is doing well with ' + discList + ', though progress has been gradual. Our team will continue working with ' + resident + ' toward the established goals.',
-      moretime: resident + ' is continuing to work toward the goals established in ' + discList + '. Our clinical team has determined that additional time is needed to meet those goals.',
-      difficulty: resident + ' has been experiencing some difficulty with ' + discList + '. Our team is adjusting the approach as needed to best support ' + resident + '\'s progress.'
-    };
-    body = 'Hello ' + poa + ',\n\n' +
-      'I am reaching out to provide an update on ' + resident + '\'s therapy progress.\n\n' +
-      statusText[selectedStatus] + '\n\n';
-  }
-
-  if (comments) {
-    body += comments.replace(/\.+$/, '') + '.\n\n';
-  }
-
-  // Per-discipline frequency
-  var freqVerb = {increase: 'increasing', decrease: 'decreasing', nochange: ''};
-  var discsWithFreq = [];
-  if (hasPT) discsWithFreq.push({name: 'Physical Therapy', freq: document.getElementById('u-pt-freq').value.trim(), weeks: document.getElementById('u-pt-weeks').value.trim()});
-  if (hasOT) discsWithFreq.push({name: 'Occupational Therapy', freq: document.getElementById('u-ot-freq').value.trim(), weeks: document.getElementById('u-ot-weeks').value.trim()});
-  if (hasST) discsWithFreq.push({name: 'Speech Therapy', freq: document.getElementById('u-st-freq').value.trim(), weeks: document.getElementById('u-st-weeks').value.trim()});
-
-  if (selectedFreqChange === 'nochange') {
-    var hasAnyFreq = false;
-    for (var i = 0; i < discsWithFreq.length; i++) {
-      if (discsWithFreq[i].freq && discsWithFreq[i].weeks) { hasAnyFreq = true; break; }
-    }
-    if (hasAnyFreq) {
-      for (var i = 0; i < discsWithFreq.length; i++) {
-        var d = discsWithFreq[i];
-        if (d.freq && d.weeks) {
-          body += d.name + ' will continue at ' + d.freq + ' times per week for approximately ' + d.weeks + ' weeks.\n\n';
-        }
-      }
-    }
-  } else {
-    var verb = freqVerb[selectedFreqChange];
-    for (var i = 0; i < discsWithFreq.length; i++) {
-      var d = discsWithFreq[i];
-      if (d.freq && d.weeks) {
-        body += 'We will be ' + verb + ' ' + d.name + ' to ' + d.freq + ' times per week for approximately ' + d.weeks + ' weeks.\n\n';
-      }
-    }
-  }
-
-  body += 'Please feel free to reach out with any questions.\n\n' +
-    'Thank you,';
-
-  document.getElementById('u-subject').textContent = subject;
-  document.getElementById('u-body').textContent = body;
-  showOutput('u');
-}
-
-// ── THERAPY TRANSITION ──
-function generateTransition() {
-  var resident = document.getElementById('t-resident').value.trim();
-  var poa = document.getElementById('t-poa').value.trim();
-  var visits = document.getElementById('visitsRemaining').value.trim();
-  if (!resident || !poa) { alert('Please enter the resident name and family contact name.'); return; }
-  if (!selectedReason) { alert('Please select a reason for the transition.'); return; }
-  if (selectedReason === 'visits' && !visits) { alert('Please enter the number of visits remaining.'); return; }
-
-  var facility = getFacility();
-
-  var subjects = {
-    goals: 'Update on ' + resident + '\'s Therapy Progress',
-    visits: 'Update on ' + resident + '\'s Upcoming Therapy Transition',
-    plateau: 'Update on ' + resident + '\'s Therapy and Next Steps',
-    hh: 'Update on ' + resident + '\'s Therapy Services'
-  };
-
-  var bodies = {
-    goals:
-'Hello ' + poa + ',\n\n' +
-'I am reaching out to let you know that ' + resident + ' has met all of their therapy goals and will be graduating from our skilled therapy program.\n\n' +
-'Prior to concluding skilled services, ' + resident + ' will be provided with a personalized Home Exercise Program to support continued progress.\n\n' +
-'I also want to make you aware of our Health and Wellness Program, which is available to all residents and designed to help maintain the gains made during therapy. Sessions are $55 for a 30 minute visit, with no minimum or maximum commitment. Most residents participate twice per week.\n\n' +
-'Please feel free to reach out with any questions.\n\n' +
-'Thank you,',
-
-    visits:
-'Hello ' + poa + ',\n\n' +
-'I am reaching out to share an update on ' + resident + '\'s therapy plan as we approach the next phase of care.\n\n' +
-'In order to preserve the ' + (visits ? visits + ' visits' : 'remaining visits') + ' that remain, we will be wrapping up ' + resident + '\'s skilled services at this time. Should ' + resident + ' experience a change in condition or a new skilled need later in the year, those visits will be available and ready to use.\n\n' +
-'Prior to concluding services, ' + resident + ' will be provided with a personalized Home Exercise Program tailored to their current level.\n\n' +
-'I also want to make you aware of our Health and Wellness Program, which many families find to be a supportive bridge following skilled therapy. Sessions are $55 for 30 minutes, with no minimum or maximum visits required. Most residents participate twice per week.\n\n' +
-'Please feel free to reach out with any questions.\n\n' +
-'Thank you,',
-
-    plateau:
-'Hello ' + poa + ',\n\n' +
-'I am reaching out to share an update on ' + resident + '\'s therapy progress and outline the next steps as we look ahead.\n\n' +
-resident + ' has reached a stable functional level, and our clinical team has determined that wrapping up skilled services is the most appropriate next step. We are pleased with the progress ' + resident + ' has made.\n\n' +
-'Prior to concluding skilled services, ' + resident + ' will be provided with a personalized Home Exercise Program tailored to their current functional level.\n\n' +
-'I also want to make you aware of our Health and Wellness Program, which is available to all residents and designed to help maintain the progress achieved during therapy. Sessions are $55 for 30 minutes, with no minimum or maximum visits required. Most residents participate twice per week.\n\n' +
-'Please feel free to reach out with any questions.\n\n' +
-'Thank you,',
-
-    hh:
-'Hello ' + poa + ',\n\n' +
-'I am reaching out to share an update on ' + resident + '\'s therapy services here at ' + facility + '.\n\n' +
-'Up until now, ' + resident + '\'s therapy services have been provided under Medicare Part B through our team here at ' + facility + '. ' + resident + ' has recently been picked up by a home health company for skilled nursing services, and when a resident is receiving home health, all services, including therapy, must be billed under Medicare Part A through the home health company. Because of this change, we have partnered with the home health company so that our in-house therapists can continue working with ' + resident + ' directly.\n\n' +
-'Therapy visits under home health are generally more limited. ' + resident + ' will likely be seen approximately one time per week per discipline, which is a lower frequency than what ' + resident + ' may have been receiving previously.\n\n' +
-'To help supplement, I want to make you aware of our Health and Wellness Program. This is a private pay option available to all residents that allows ' + resident + ' to continue working on strength, balance, and mobility outside of the home health visits. Sessions are $55 for 30 minutes, with no minimum or maximum commitment. Many families find this to be a great way to keep the momentum going between skilled sessions.\n\n' +
-'Please feel free to reach out with any questions.\n\n' +
-'Thank you,'
-  };
-
-  document.getElementById('t-subject').textContent = subjects[selectedReason];
-  document.getElementById('t-body').textContent = bodies[selectedReason];
-  showOutput('t');
 }
 
 // ── FALL FOLLOW-UP ──
 function generateFall() {
-  var resident = document.getElementById('f-resident').value.trim();
-  var poa = document.getElementById('f-poa').value.trim();
-  var intervention = document.getElementById('f-intervention').value.trim();
-  if (!resident || !poa) { alert('Please enter the resident name and family contact name.'); return; }
-  if (!intervention) { alert('Please enter the intervention details.'); return; }
+  clearErrors('fall');
+  $('f-links-error').textContent = '';
+
+  var resident = val('f-resident');
+  var poa = val('f-poa');
+  var intervention = val('f-intervention');
+  var ok = true;
+
+  if (!resident) { setFieldError('f-resident', 'Enter the resident first name.'); ok = false; }
+  if (!poa) { setFieldError('f-poa', 'Enter the family contact name.'); ok = false; }
+  if (!intervention) { setFieldError('f-intervention', 'Enter the intervention details.'); ok = false; }
 
   var links = [];
+  var badLink = false;
   document.querySelectorAll('.link-input').forEach(function(el) {
     var v = el.value.trim();
-    if (v) links.push(v);
+    if (!v) { el.removeAttribute('aria-invalid'); return; }
+    if (!isValidLink(v)) {
+      el.setAttribute('aria-invalid', 'true');
+      badLink = true;
+    } else {
+      el.removeAttribute('aria-invalid');
+      links.push(v);
+    }
   });
+  if (badLink) {
+    $('f-links-error').textContent = 'Use a full link starting with http:// or https://.';
+    ok = false;
+  }
+
+  if (!ok) { focusFirstError('fall'); return; }
 
   var subject = resident + ' \u2013 Fall Follow-Up and Therapy Recommendations';
 
   var body = 'Hello ' + poa + ',\n\n' +
-    'I am reaching out following ' + resident + '\'s recent fall to share some recommendations from our therapy team.\n\n' +
+    getIntroSentence() + ' I wanted to share some recommendations from our therapy team following ' + resident + '\'s recent fall.\n\n' +
     'After completing our assessment, our team is recommending ' + intervention + ' to support ' + resident + '\'s safety here at ' + getFacility() + '.\n\n';
 
   if (links.length > 0) {
@@ -1372,92 +659,76 @@ function generateFall() {
       }
       body += '\n';
     }
-    body += 'You can purchase the equipment directly through the link above, or if you would like, we can purchase on your behalf and have the charge placed on ' + resident + '\'s account.\n\n';
+    body += 'You\'re welcome to order the equipment directly through the ' + (links.length === 1 ? 'link' : 'links') + ' above whenever it\'s convenient for you.\n\n';
   }
 
   body += 'Please feel free to reach out with any questions.\n\n' +
     'Thank you,';
 
-  document.getElementById('f-subject').textContent = subject;
-  document.getElementById('f-body').textContent = body;
+  $('f-subject').textContent = subject;
+  $('f-body').textContent = body;
+  generated.fall = true;
+  clearStale('fall');
   showOutput('f');
 }
 
 // ── CLEAR ALL ──
 function clearTab(tab) {
+  if (hasResidentData(tab) && !confirm('Clear the resident details and generated email on this tab?')) return;
+
   if (tab === 'start') {
-    document.getElementById('s-resident').value = '';
-    document.getElementById('s-poa').value = '';
-    sDiscs = {pt:false, ot:false, st:false};
-    ['pt','ot','st'].forEach(function(d) {
-      var chip = document.getElementById('s-'+d+'-chip');
+    $('s-resident').value = '';
+    $('s-poa').value = '';
+    sDiscs = { pt: false, ot: false, st: false };
+    ['pt', 'ot', 'st'].forEach(function(d) {
+      var chip = $('s-' + d + '-chip');
       chip.className = 'disc-chip';
+      chip.setAttribute('aria-pressed', 'false');
     });
-    document.getElementById('stFocusField').style.display = 'none';
-    document.querySelectorAll('input[name="stFocus"]').forEach(function(r){r.checked=false;});
-    document.getElementById('s-reason').value = '';
-    document.getElementById('customReasonField').style.display = 'none';
-    document.getElementById('s-custom-reason').value = '';
+    $('s-reason').value = '';
+    $('customReasonField').style.display = 'none';
+    $('s-custom-reason').value = '';
+    $('s-connector').value = 'due';
     setReferralType('existing');
-    document.getElementById('s-output').classList.remove('visible');
-  } else if (tab === 'eval') {
-    document.getElementById('e-resident').value = '';
-    document.getElementById('e-poa').value = '';
-    eDiscs = {pt:false, ot:false, st:false};
-    ['pt','ot','st'].forEach(function(d) {
-      document.getElementById('e-'+d+'-chip').className = 'disc-chip';
-      document.getElementById('eval-'+d+'-card').style.display = 'none';
-      document.querySelectorAll('.e-'+d+'-goal').forEach(function(btn){btn.classList.remove('selected');});
-      var custom = document.getElementById('e-'+d+'-custom');
-      if (custom) custom.value = '';
-    });
-    document.querySelectorAll('input[name="e-st-focus"]').forEach(function(r){r.checked=false;});
-    document.getElementById('eval-st-swallow').style.display = 'none';
-    document.getElementById('eval-st-cognition').style.display = 'none';
-    ['pt','ot','st'].forEach(function(d) {
-      document.getElementById('e-'+d+'-freq').value = '';
-      document.getElementById('e-'+d+'-weeks').value = '';
-    });
-    document.getElementById('e-output').classList.remove('visible');
-  } else if (tab === 'update') {
-    document.getElementById('u-resident').value = '';
-    document.getElementById('u-poa').value = '';
-    uDiscs = {pt:false, ot:false, st:false};
-    ['pt','ot','st'].forEach(function(d) {
-      document.getElementById('u-'+d+'-chip').className = 'disc-chip';
-      document.getElementById('update-'+d+'-freq').style.display = 'none';
-      document.getElementById('u-'+d+'-freq').value = '';
-      document.getElementById('u-'+d+'-weeks').value = '';
-    });
-    document.getElementById('u-comments').value = '';
-    document.getElementById('statusGroup').querySelectorAll('.reason-option').forEach(function(o){o.classList.remove('selected');});
-    document.getElementById('freqChangeGroup').querySelectorAll('.reason-option').forEach(function(o){o.classList.remove('selected');});
-    selectedStatus = null;
-    selectedFreqChange = null;
-    document.getElementById('u-output').classList.remove('visible');
-  } else if (tab === 'transition') {
-    document.getElementById('t-resident').value = '';
-    document.getElementById('t-poa').value = '';
-    document.getElementById('panel-transition').querySelectorAll('.reason-option').forEach(function(o){o.classList.remove('selected');});
-    selectedReason = null;
-    document.getElementById('visitsField').classList.remove('show');
-    document.getElementById('visitsRemaining').value = '';
-    document.getElementById('t-output').classList.remove('visible');
-  } else if (tab === 'fall') {
-    document.getElementById('f-resident').value = '';
-    document.getElementById('f-poa').value = '';
-    document.getElementById('f-intervention').value = '';
-    var list = document.getElementById('linkList');
-    list.innerHTML = '<div class="link-row"><input type="text" class="link-input" placeholder="Paste purchase link here"><button type="button" class="link-rm-btn" onclick="removeLink(this)" aria-label="Remove link row">Remove</button></div>';
-    document.getElementById('f-output').classList.remove('visible');
+    $('s-subject').textContent = '';
+    $('s-body').textContent = '';
+    $('s-output').classList.remove('visible');
+  } else {
+    $('f-resident').value = '';
+    $('f-poa').value = '';
+    $('f-intervention').value = '';
+    $('linkList').innerHTML = '<div class="link-row"><input type="text" class="link-input" placeholder="Paste purchase link here"><button type="button" class="link-rm-btn" onclick="removeLink(this)" aria-label="Remove link row">Remove</button></div>';
+    $('f-subject').textContent = '';
+    $('f-body').textContent = '';
+    $('f-output').classList.remove('visible');
   }
+
+  clearErrors(tab);
+  generated[tab] = false;
+  clearStale(tab);
+  toast('Cleared. Ready for the next resident.');
 }
 
 // ── HELPERS ──
+function hasResidentData(tab) {
+  if (generated[tab]) return true;
+  if (tab === 'start') {
+    return !!(val('s-resident') || val('s-poa') || val('s-custom-reason') || sDiscs.pt || sDiscs.ot || sDiscs.st);
+  }
+  var anyLink = false;
+  document.querySelectorAll('.link-input').forEach(function(el) {
+    if (el.value.trim()) anyLink = true;
+  });
+  return !!(val('f-resident') || val('f-poa') || val('f-intervention') || anyLink);
+}
+
 function showOutput(prefix) {
-  var card = document.getElementById(prefix + '-output');
+  var card = $(prefix + '-output');
   card.classList.add('visible');
-  setTimeout(function() { card.scrollIntoView({behavior:'smooth', block:'start'}); }, 50);
+  var smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  setTimeout(function() {
+    card.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
+  }, 50);
 }
 
 function fallbackCopy(text, cb) {
@@ -1467,21 +738,30 @@ function fallbackCopy(text, cb) {
   document.body.appendChild(ta);
   ta.focus();
   ta.select();
-  try { document.execCommand('copy'); cb(); } catch (e) {}
+  var worked = false;
+  try { worked = document.execCommand('copy') === true; } catch (e) {}
   document.body.removeChild(ta);
+  if (worked) { cb(); } else { toast('Copy was blocked. Select the email text and copy it manually.'); }
 }
 
 function copyEmail(prefix) {
-  var subject = document.getElementById(prefix + '-subject').textContent;
-  var body = document.getElementById(prefix + '-body').textContent;
+  var tab = (prefix === 's') ? 'start' : 'fall';
+  if (isStale[tab]) {
+    toast('Generate the email again to include your latest changes.');
+    return;
+  }
+
+  var subject = $(prefix + '-subject').textContent;
+  var body = $(prefix + '-body').textContent;
   var full = 'Subject: ' + subject + '\n\n' + body;
-  var btn = document.getElementById(prefix + '-copy');
-  var orig = btn.textContent;
+  var btn = $(prefix + '-copy');
+  var orig = 'Copy Full Email';
   var done = function() {
     btn.textContent = '\u2713 Copied';
     btn.classList.add('copied');
     setTimeout(function() { btn.textContent = orig; btn.classList.remove('copied'); }, 2200);
   };
+
   if (navigator.clipboard && window.isSecureContext) {
     navigator.clipboard.writeText(full).then(done).catch(function() { fallbackCopy(full, done); });
   } else {
@@ -1489,34 +769,47 @@ function copyEmail(prefix) {
   }
 }
 
-function copyRef(id, btn) {
-  var el = document.getElementById(id);
-  var text = el.innerText;
-  var orig = btn.textContent;
-  var done = function() {
-    btn.textContent = 'Copied';
-    btn.classList.add('copied');
-    setTimeout(function() { btn.textContent = orig; btn.classList.remove('copied'); }, 2200);
-  };
-  if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(text).then(done).catch(function() { fallbackCopy(text, done); });
-  } else {
-    fallbackCopy(text, done);
-  }
-}
-
 function addLink() {
   var row = document.createElement('div');
   row.className = 'link-row';
   row.innerHTML = '<input type="text" class="link-input" placeholder="Paste purchase link here"><button type="button" class="link-rm-btn" onclick="removeLink(this)" aria-label="Remove link row">Remove</button>';
-  document.getElementById('linkList').appendChild(row);
+  $('linkList').appendChild(row);
+  row.querySelector('input').focus();
+  markStale('fall');
 }
 
 function removeLink(btn) {
   var rows = document.querySelectorAll('#linkList .link-row');
-  if (rows.length > 1) btn.parentElement.remove();
-  else btn.parentElement.querySelector('input').value = '';
+  if (rows.length > 1) {
+    btn.parentElement.remove();
+  } else {
+    btn.parentElement.querySelector('input').value = '';
+  }
+  markStale('fall');
 }
+
+// ── INIT ──
+loadPrefs();
+watchPanel('start');
+watchPanel('fall');
+
+$('facilityName').addEventListener('input', function() {
+  savePrefs();
+  markStale('start');
+  markStale('fall');
+});
+
+['s-pt-chip', 's-ot-chip', 's-st-chip'].forEach(function(id) {
+  $(id).setAttribute('aria-pressed', 'false');
+});
+
+// Guard against losing resident details to a stray reload or tab close.
+window.addEventListener('beforeunload', function(e) {
+  if (hasResidentData('start') || hasResidentData('fall')) {
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
 </script>
 </body>
 </html>
